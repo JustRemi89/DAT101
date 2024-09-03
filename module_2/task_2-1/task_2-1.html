@@ -8,11 +8,40 @@
 <script>
   /* write your code below this line  🙂 */
   "use strict"
-let courseStatus = "failed";
-console.log("You have " + courseStatus + " this course!");
-courseStatus = "passed";
-console.log("I mean ... You have " + courseStatus + " this course!");
+  let courseStatus = "failed";
+  document.write("<p>You have " + courseStatus + " this course!</p>");
 
+  const listPrice = 1000;
+  let discount = "35";
+  let discountedPrice = parseInt(discount) * listPrice / 100;
+  discountedPrice = listPrice - discountedPrice;
+  document.write("<p>The price was " + listPrice + " kr before, but now it is on sale for " + discountedPrice + " kr.</p>");
+  
+  courseStatus = "passed";
+  document.write("<p>I mean ... You have " + courseStatus + " this course!</p>");
+
+  const valuePI = 3.14;
+
+  document.write("<p>The value of pi is " + valuePI + "</p>");
+
+  function calcAgeDiff(person1, person2) {
+    let ageDiff = Math.abs(person1.age - person2.age);
+    return ageDiff;
+  }
+
+  let person1 = {
+    name: "Ola Nordmann",
+    age: 30
+  };
+  let person2 = {
+    name: "Trine Tyroler",
+    age: 27
+  };
+
+  let ageDiff = calcAgeDiff(person1, person2);
+  document.write("<p>"+person1.name+" and "+person2.name+" are friends, but there is an agegap of "+ageDiff+" years between them.</p>");
+
+  valuePI = 4.13;
 </script>
 </body>
 </html>

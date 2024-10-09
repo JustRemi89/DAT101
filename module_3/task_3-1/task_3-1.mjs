@@ -83,7 +83,7 @@ printOut("Check month: " + monthName);
 if(monthName.search("r") >= 0) {
   printOut("You must take vitamin D.");
 } else {
-  printOut("You do not need to take vitamin D");
+  printOut("You do not need to take vitamin D.");
 }
 
 printOut(newLine);

@@ -72,12 +72,20 @@ if(imgMP >= 4 && imgMP < 6) {
 printOut(newLine);
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-const monthList =["January", "February", "Mars", "April", "Mai",
-  "Jun", "Juli", "August", "September", "October", "November", "December"];
-  const noOfMonth = monthList.length;
-  const monthName = monthList[Math.floor(Math.random() * noOfMonth)];
-printOut("Replace this with you answer!");
+/* Print if monthName contains “r”: “You must take vitamin D” else “You do not need to take vitamin D” */
+const monthList =["January", "February", "Mars", "April", "Mai", "Jun", "Juli", "August", "September", "October", "November", "December"];
+const noOfMonth = monthList.length;
+const monthName = monthList[Math.floor(Math.random() * noOfMonth)];
+
+printOut("Do I have to take Vitamin D?");
+printOut("Check month: " + monthName);
+
+if(monthName.search("r") >= 0) {
+  printOut("You must take vitamin D.");
+} else {
+  printOut("You do not need to take vitamin D");
+}
+
 printOut(newLine);
 
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");

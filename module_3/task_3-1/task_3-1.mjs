@@ -75,7 +75,8 @@ printOut("--- Part 8 -----------------------------------------------------------
 /* Print if monthName contains “r”: “You must take vitamin D” else “You do not need to take vitamin D” */
 const monthList =["January", "February", "Mars", "April", "Mai", "Jun", "Juli", "August", "September", "October", "November", "December"];
 const noOfMonth = monthList.length;
-const monthName = monthList[Math.floor(Math.random() * noOfMonth)];
+const randomMonth = Math.floor(Math.random() * noOfMonth);
+const monthName = monthList[randomMonth];
 
 printOut("Do I have to take Vitamin D?");
 printOut("Check month: " + monthName);
@@ -89,12 +90,22 @@ if(monthName.search("r") >= 0) {
 printOut(newLine);
 
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
+/* Expand exercise 8 to print how many days there are in the current month. And do not use date object */
+const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+printOut("There are " + daysInMonth[randomMonth] + " days in " + monthList[randomMonth]);
 printOut(newLine);
 
 /* Task 10*/
 printOut("--- Part 10 ---------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
+/* Imagine you have an art gallery, but you need to refurbish the premises, so you close the gallery from
+March through May, but in April you have temporary premises in the building next door. Use the month
+constant in exercise 8 to inform the status of your gallery in that month. */
+printOut("Gallery status in " + monthName);
+if(monthName == "Mars" || monthName == "Mai") {
+  printOut("The art gallery is closed.");
+} else if(monthName == "April") {
+  printOut("The art gallery is closed, but there is a temporary location in the building next door.");
+} else {
+  printOut("The art gallery is open");
+}
 printOut(newLine);

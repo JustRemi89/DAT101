@@ -90,6 +90,26 @@ diceThrow += d3.toString() + ", ";
 diceThrow += d4.toString() + ", ";
 diceThrow += d5.toString() + ", ";
 diceThrow += d6.toString();
+
+printOut("diceThrow: " + diceThrow);
+
+const count1 = (diceThrow.match(/1/g) || "").length;
+
+let diceCount = "";
+diceCount += count1.toString() + ", ";
+diceCount += count2.toString() + ", ";
+diceCount += count3.toString() + ", ";
+diceCount += count4.toString() + ", ";
+diceCount += count5.toString() + ", ";
+diceCount += count6.toString();
+
+const equals1 = (diceCount.match(/1/g)).length; /* straight */
+const equals6 = (diceCount.match(/6/g)).length; /* yahtzee */
+printOut("equals1: " + equals1.toString()); /* straight */
+printOut("equals6: " + equals6.toString()); /* yahtzee */
+
+printOut("diceCount: " + diceCount);
+
 printOut(newLine);
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");

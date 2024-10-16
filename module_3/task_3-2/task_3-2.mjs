@@ -15,14 +15,32 @@ example, 45. Let the computer "guess" by generating a random number. Use a "whil
 "random" function. Keep the "while" loop running as long as the "guessed number" is incorrect. Print the
 number once the "while" loop has completed. You do not need to print anything while the "while" loop is in
 progress */
-printOut("Replace this with you answer!");
+
+const answerNumber = 42;
+let guessNumber = 0;
+while(answerNumber !== guessNumber){
+  guessNumber = Math.ceil(Math.random() * 60);
+}
+printOut("Guess Number = " + guessNumber.toString());
+
 printOut(newLine);
 
 printOut("--- Part 3 ----------------------------------------------------------------------------------------------");
 /* Take the program from part 2 and expand it to guess a number between 1 and one million. Print the
 number of guesses as well as the number of milliseconds it took to guess the number. HINT: Use the
 Date.now() function to measure time. */
-printOut("Replace this with you answer!");
+
+guessNumber = 0;
+let guessCount = 0;
+const startTime = Date.now();
+while(answerNumber !== guessNumber){
+  guessCount++;
+  guessNumber = Math.ceil(Math.random() * 1000000);
+}
+const endTime = Date.now();
+const timeUsed = endTime - startTime;
+printOut("Antall gjetninger " + guessCount.toString() + " tok " + timeUsed.toString() + " ms");
+
 printOut(newLine);
 
 printOut("--- Part 4 ----------------------------------------------------------------------------------------------");

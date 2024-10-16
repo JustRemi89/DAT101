@@ -76,24 +76,28 @@ printOut("--- Part 7 -----------------------------------------------------------
 ● 2 of a kind and 4 of a kind (tower)
 ● All the same (Yahtzee) */
 printOut("Dice Rolling Extravaganza");
-const d1 = Math.ceil(Math.random * 6);
-const d2 = Math.ceil(Math.random * 6);
-const d3 = Math.ceil(Math.random * 6);
-const d4 = Math.ceil(Math.random * 6);
-const d5 = Math.ceil(Math.random * 6);
-const d6 = Math.ceil(Math.random * 6);
+const d1 = Math.ceil(Math.random() * 6);
+const d2 = Math.ceil(Math.random() * 6);
+const d3 = Math.ceil(Math.random() * 6);
+const d4 = Math.ceil(Math.random() * 6);
+const d5 = Math.ceil(Math.random() * 6);
+const d6 = Math.ceil(Math.random() * 6);
 
 let diceThrow = "";
-diceThrow += d1.toString() + ", ";
-diceThrow += d2.toString() + ", ";
-diceThrow += d3.toString() + ", ";
-diceThrow += d4.toString() + ", ";
-diceThrow += d5.toString() + ", ";
+diceThrow += d1.toString() + ",";
+diceThrow += d2.toString() + ",";
+diceThrow += d3.toString() + ",";
+diceThrow += d4.toString() + ",";
+diceThrow += d5.toString() + ",";
 diceThrow += d6.toString();
-
 printOut("diceThrow: " + diceThrow);
 
 const count1 = (diceThrow.match(/1/g) || "").length;
+const count2 = (diceThrow.match(/2/g) || "").length;
+const count3 = (diceThrow.match(/3/g) || "").length;
+const count4 = (diceThrow.match(/4/g) || "").length;
+const count5 = (diceThrow.match(/5/g) || "").length;
+const count6 = (diceThrow.match(/6/g) || "").length;
 
 let diceCount = "";
 diceCount += count1.toString() + ", ";
@@ -107,6 +111,12 @@ const equals1 = (diceCount.match(/1/g)).length; /* straight */
 const equals6 = (diceCount.match(/6/g)).length; /* yahtzee */
 printOut("equals1: " + equals1.toString()); /* straight */
 printOut("equals6: " + equals6.toString()); /* yahtzee */
+
+if(equals1 === 6) {
+    printOut("Full straight");
+} else if(equals6 === 1) {
+    printOut("Yahtzee!");
+}
 
 printOut("diceCount: " + diceCount);
 

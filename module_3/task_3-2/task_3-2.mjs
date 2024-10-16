@@ -75,7 +75,14 @@ printOut("--- Part 7 -----------------------------------------------------------
 ● 3 pairs
 ● 2 of a kind and 4 of a kind (tower)
 ● All the same (Yahtzee) */
-printOut("Replace this with you answer!");
+printOut("Dice Rolling Extravaganza");
+const d1 = Math.ceil(Math.random * 6);
+const d2 = Math.ceil(Math.random * 6);
+const d3 = Math.ceil(Math.random * 6);
+const d4 = Math.ceil(Math.random * 6);
+const d5 = Math.ceil(Math.random * 6);
+const d6 = Math.ceil(Math.random * 6);
+
 printOut(newLine);
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");

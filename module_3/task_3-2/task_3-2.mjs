@@ -83,6 +83,13 @@ const d4 = Math.ceil(Math.random * 6);
 const d5 = Math.ceil(Math.random * 6);
 const d6 = Math.ceil(Math.random * 6);
 
+let diceThrow = "";
+diceThrow += d1.toString() + ", ";
+diceThrow += d2.toString() + ", ";
+diceThrow += d3.toString() + ", ";
+diceThrow += d4.toString() + ", ";
+diceThrow += d5.toString() + ", ";
+diceThrow += d6.toString();
 printOut(newLine);
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");

@@ -47,7 +47,29 @@ printOut("--- Part 4 -----------------------------------------------------------
 /* Use a "for" loop and a "while" loop to find all prime numbers greater than 1 and less than 200.
 ○ HINT: A prime number is any natural number greater than 1 that is only divisible by itself and
 1. The number 1 is not a prime. (See Wikipedia on primes or ask your AI). */
-printOut("Replace this with you answer!");
+
+let primes = [];
+
+for (let num = 2; num < 200; num++) {
+    let isPrime = true;
+    let i = 2;
+
+    // Using a while loop to check if the number is divisible by any number other than 1 and itself
+    while (i <= Math.sqrt(num)) {
+        if (num % i === 0) {
+            isPrime = false;
+            break; // Exit the loop if a divisor is found
+        }
+        i++;
+    }
+
+    // If no divisors were found, it's a prime number
+    if (isPrime) {
+        primes.push(num);
+    }
+}
+printOut(primes.toString());
+
 printOut(newLine);
 
 printOut("--- Part 5 ----------------------------------------------------------------------------------------------");
@@ -64,10 +86,14 @@ K1R5 K2R5 K3R5 K4R5 K5R5 K6R5 K7R5 K8R5 K9R5
 K1R6 K2R6 K3R6 K4R6 K5R6 K6R6 K7R6 K8R6 K9R6
 K1R7 K2R7 K3R7 K4R7 K5R7 K6R7 K7R7 K8R7 K9R7 */
 
-let columnNumber = 1;
-let rowNumber = 1;
+for(let row = 1; row <= 7; row++) {
+    let rowText = "";
+    for(let column = 1; column <= 9; column++) {
+        rowText += "K" + column + "R" + row + " ";
+    }
+    printOut(rowText);
+}
 
-printOut("Replace this with you answer!");
 printOut(newLine);
 
 printOut("--- Part 6 ----------------------------------------------------------------------------------------------");
@@ -84,6 +110,35 @@ an array. You can use a for loop and a do/while loop to achieve this.
 Hint for Success: If you successfully complete the sorting challenge, you'll unlock a valuable hint for Part
 9 of "DAT101: Mandatory assignment 4.1" that will make it easier to solve. The learning outcomes remain
 the same, but this hint will give you a head start! */
+
+const studGrade1 = Math.ceil(Math.random() * 236);
+const studGrade2 = Math.ceil(Math.random() * 236);
+const studGrade3 = Math.ceil(Math.random() * 236);
+const studGrade4 = Math.ceil(Math.random() * 236);
+const studGrade5 = Math.ceil(Math.random() * 236);
+
+let percent;
+
+if(percent >= 89 && percent <= 100) {
+    const grade = "A";
+} else if(percent >= 77 && percent <= 88) {
+    const grade = "B";
+} else if(percent >= 65 && percent <= 76) {
+    const grade = "C";
+} else if(percent >= 53 && percent <= 64) {
+    const grade = "D";
+} else if(percent >= 41 && percent <= 52) {
+    const grade = "E";
+} else {
+    const grade = "F";
+}
+
+printOut("studGrade1: " + studGrade1.toString() + " (Grade A)");
+printOut("studGrade2: " + studGrade2.toString() + " (Grade A)");
+printOut("studGrade3: " + studGrade3.toString() + " (Grade A)");
+printOut("studGrade4: " + studGrade4.toString() + " (Grade A)");
+printOut("studGrade5: " + studGrade5.toString() + " (Grade A)");
+
 printOut("Replace this with you answer!");
 printOut(newLine);
 
@@ -109,7 +164,7 @@ diceThrow += d4.toString() + ",";
 diceThrow += d5.toString() + ",";
 diceThrow += d6.toString();
 
-// diceThrow = "2,2,4,4,4,4"; // testThrow
+// diceThrow = "4,4,4,4,4,4"; // testThrow
 
 printOut("diceThrow: " + diceThrow);
 
@@ -138,6 +193,13 @@ printOut("equals2: " + equals2.toString());
 printOut("equals4: " + equals4.toString());
 printOut("equals6: " + equals6.toString()); // yahtzee
 
+let throwCount = 0;
+ /*
+while(equals6 !== 1) {
+    throwCount++;
+}
+printOut("Yatzy! It took " + throwCount + " throws to hit it.");
+*/
 if(equals1 === 6) {
     printOut("Full straight");
 } else if(equals6 === 1) {

@@ -90,6 +90,9 @@ diceThrow += d3.toString() + ",";
 diceThrow += d4.toString() + ",";
 diceThrow += d5.toString() + ",";
 diceThrow += d6.toString();
+
+// diceThrow = "2,2,4,4,4,4"; // testThrow
+
 printOut("diceThrow: " + diceThrow);
 
 const count1 = (diceThrow.match(/1/g) || "").length;
@@ -100,25 +103,34 @@ const count5 = (diceThrow.match(/5/g) || "").length;
 const count6 = (diceThrow.match(/6/g) || "").length;
 
 let diceCount = "";
-diceCount += count1.toString() + ", ";
-diceCount += count2.toString() + ", ";
-diceCount += count3.toString() + ", ";
-diceCount += count4.toString() + ", ";
-diceCount += count5.toString() + ", ";
+diceCount += count1.toString() + ",";
+diceCount += count2.toString() + ",";
+diceCount += count3.toString() + ",";
+diceCount += count4.toString() + ",";
+diceCount += count5.toString() + ",";
 diceCount += count6.toString();
+printOut("diceCount: " + diceCount);
 
-const equals1 = (diceCount.match(/1/g)).length; /* straight */
-const equals6 = (diceCount.match(/6/g)).length; /* yahtzee */
-printOut("equals1: " + equals1.toString()); /* straight */
-printOut("equals6: " + equals6.toString()); /* yahtzee */
+const equals1 = (diceCount.match(/1/g) || "").length; // straight
+const equals6 = (diceCount.match(/6/g) || "").length; // yahtzee
+const equals2 = (diceCount.match(/2/g) || "").length;
+const equals4 = (diceCount.match(/4/g) || "").length;
+printOut("equals1: " + equals1.toString()); // straight
+printOut("equals2: " + equals2.toString());
+printOut("equals4: " + equals4.toString());
+printOut("equals6: " + equals6.toString()); // yahtzee
 
 if(equals1 === 6) {
     printOut("Full straight");
 } else if(equals6 === 1) {
     printOut("Yahtzee!");
+} else if(equals2 === 1 && equals4 === 1) {
+    printOut("Tower");
+} else if(equals2 === 3) {
+    printOut("3 pairs");
+} else {
+    printOut("Loser");
 }
-
-printOut("diceCount: " + diceCount);
 
 printOut(newLine);
 

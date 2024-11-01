@@ -112,6 +112,10 @@ Hint for Success: If you successfully complete the sorting challenge, you'll unl
 the same, but this hint will give you a head start! */
 
 const maxScore = 236;
+
+// Preparing "boxes" to put results in so we can sort them by grades A-F
+let varA = "", varB = "", varC = "", varD = "", varE = "", varF = "";
+
 for (let i = 1; i <= 5; i++) {
     let score = Math.ceil(Math.random() * maxScore);
     let percentage = (score / maxScore) * 100;

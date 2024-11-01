@@ -111,35 +111,26 @@ Hint for Success: If you successfully complete the sorting challenge, you'll unl
 9 of "DAT101: Mandatory assignment 4.1" that will make it easier to solve. The learning outcomes remain
 the same, but this hint will give you a head start! */
 
-const studGrade1 = Math.ceil(Math.random() * 236);
-const studGrade2 = Math.ceil(Math.random() * 236);
-const studGrade3 = Math.ceil(Math.random() * 236);
-const studGrade4 = Math.ceil(Math.random() * 236);
-const studGrade5 = Math.ceil(Math.random() * 236);
-
-let percent;
-
-if(percent >= 89 && percent <= 100) {
-    const grade = "A";
-} else if(percent >= 77 && percent <= 88) {
-    const grade = "B";
-} else if(percent >= 65 && percent <= 76) {
-    const grade = "C";
-} else if(percent >= 53 && percent <= 64) {
-    const grade = "D";
-} else if(percent >= 41 && percent <= 52) {
-    const grade = "E";
-} else {
-    const grade = "F";
+const maxScore = 236;
+for (let i = 1; i <= 5; i++) {
+    let score = Math.ceil(Math.random() * maxScore);
+    let percentage = (score / maxScore) * 100;
+    let grade;
+    if (percentage >= 89) {
+        grade = 'A';
+    } else if (percentage >= 77) {
+        grade = 'B';
+    } else if (percentage >= 65) {
+        grade = 'C';
+    } else if (percentage >= 53) {
+        grade = 'D';
+    } else if (percentage >= 41) {
+        grade = 'E';
+    } else {
+        grade = 'F';
+    }
+    printOut("studGrade" + i + ": " + score.toString() + " (Grade " + grade + ") " + Math.ceil(percentage.toString()) + "% of " + maxScore + " points.");
 }
-
-printOut("studGrade1: " + studGrade1.toString() + " (Grade A)");
-printOut("studGrade2: " + studGrade2.toString() + " (Grade A)");
-printOut("studGrade3: " + studGrade3.toString() + " (Grade A)");
-printOut("studGrade4: " + studGrade4.toString() + " (Grade A)");
-printOut("studGrade5: " + studGrade5.toString() + " (Grade A)");
-
-printOut("Replace this with you answer!");
 printOut(newLine);
 
 printOut("--- Part 7 ----------------------------------------------------------------------------------------------");

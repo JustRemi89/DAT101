@@ -119,22 +119,27 @@ let varA = "", varB = "", varC = "", varD = "", varE = "", varF = "";
 for (let i = 1; i <= 5; i++) {
     let score = Math.ceil(Math.random() * maxScore);
     let percentage = (score / maxScore) * 100;
-    let grade;
+    let studentEntry = "Student " + i + ": " + score.toString() + " ("+ Math.ceil(percentage.toString()) +"%) of " + maxScore.toString() + " ";
     if (percentage >= 89) {
-        grade = 'A';
+        varA += studentEntry + "Grade: A<br/>";
     } else if (percentage >= 77) {
-        grade = 'B';
+        varB += studentEntry + "Grade: B<br/>";
     } else if (percentage >= 65) {
-        grade = 'C';
+        varC += studentEntry + "Grade: C<br/>";
     } else if (percentage >= 53) {
-        grade = 'D';
+        varD += studentEntry + "Grade: D<br/>";
     } else if (percentage >= 41) {
-        grade = 'E';
+        varE += studentEntry + "Grade: E<br/>";
     } else {
-        grade = 'F';
+        varF += studentEntry + "Grade: F<br/>";
     }
-    printOut("studGrade" + i + ": " + score.toString() + " (Grade " + grade + ") " + Math.ceil(percentage.toString()) + "% of " + maxScore + " points.");
 }
+if(varA){printOut(varA);}
+if(varB){printOut(varB);}
+if(varC){printOut(varC);}
+if(varD){printOut(varD);}
+if(varE){printOut(varE);}
+if(varF){printOut(varF);}
 printOut(newLine);
 
 printOut("--- Part 7 ----------------------------------------------------------------------------------------------");
@@ -144,83 +149,90 @@ printOut("--- Part 7 -----------------------------------------------------------
 ● 2 of a kind and 4 of a kind (tower)
 ● All the same (Yahtzee) */
 printOut("Dice Rolling Extravaganza");
-const d1 = Math.ceil(Math.random() * 6);
-const d2 = Math.ceil(Math.random() * 6);
-const d3 = Math.ceil(Math.random() * 6);
-const d4 = Math.ceil(Math.random() * 6);
-const d5 = Math.ceil(Math.random() * 6);
-const d6 = Math.ceil(Math.random() * 6);
+// Variabler for å telle antall kast for hver mål-kombinasjon
+let throwCountFullStraight = 0;
+let throwCountYahtzee = 0;
+let throwCountTower = 0;
+let throwCountThreePairs = 0;
 
-let diceThrow = "";
-diceThrow += d1.toString() + ",";
-diceThrow += d2.toString() + ",";
-diceThrow += d3.toString() + ",";
-diceThrow += d4.toString() + ",";
-diceThrow += d5.toString() + ",";
-diceThrow += d6.toString();
+// Variabler for å sjekke om vi har funnet hver kombinasjon
+let fullStraightFound = false;
+let yahtzeeFound = false;
+let towerFound = false;
+let threePairsFound = false;
 
-// diceThrow = "4,4,4,4,4,4"; // testThrow
+// Løkke for å kaste terninger til vi finner alle kombinasjonene
+while (!fullStraightFound || !yahtzeeFound || !towerFound || !threePairsFound) {
+    // Genererer seks terningkast
+    const d1 = Math.ceil(Math.random() * 6);
+    const d2 = Math.ceil(Math.random() * 6);
+    const d3 = Math.ceil(Math.random() * 6);
+    const d4 = Math.ceil(Math.random() * 6);
+    const d5 = Math.ceil(Math.random() * 6);
+    const d6 = Math.ceil(Math.random() * 6);
 
-printOut("diceThrow: " + diceThrow);
+    // Kombinerer terningkastene i en streng for enkelhets skyld
+    let diceThrow = "";
+    diceThrow += d1.toString() + ",";
+    diceThrow += d2.toString() + ",";
+    diceThrow += d3.toString() + ",";
+    diceThrow += d4.toString() + ",";
+    diceThrow += d5.toString() + ",";
+    diceThrow += d6.toString();
 
-const count1 = (diceThrow.match(/1/g) || "").length;
-const count2 = (diceThrow.match(/2/g) || "").length;
-const count3 = (diceThrow.match(/3/g) || "").length;
-const count4 = (diceThrow.match(/4/g) || "").length;
-const count5 = (diceThrow.match(/5/g) || "").length;
-const count6 = (diceThrow.match(/6/g) || "").length;
+    // Teller antall forekomster av hvert tall (1 til 6)
+    const count1 = (diceThrow.match(/1/g) || "").length;
+    const count2 = (diceThrow.match(/2/g) || "").length;
+    const count3 = (diceThrow.match(/3/g) || "").length;
+    const count4 = (diceThrow.match(/4/g) || "").length;
+    const count5 = (diceThrow.match(/5/g) || "").length;
+    const count6 = (diceThrow.match(/6/g) || "").length;
 
-let diceCount = "";
-diceCount += count1.toString() + ",";
-diceCount += count2.toString() + ",";
-diceCount += count3.toString() + ",";
-diceCount += count4.toString() + ",";
-diceCount += count5.toString() + ",";
-diceCount += count6.toString();
-printOut("diceCount: " + diceCount);
+    // Beregner hvor mange ganger hver telling (1, 2, 4, 6) dukker opp
+    const equals1 = (count1 === 1) + (count2 === 1) + (count3 === 1) + (count4 === 1) + (count5 === 1) + (count6 === 1);
+    const equals2 = (count1 === 2) + (count2 === 2) + (count3 === 2) + (count4 === 2) + (count5 === 2) + (count6 === 2);
+    const equals4 = (count1 === 4) + (count2 === 4) + (count3 === 4) + (count4 === 4) + (count5 === 4) + (count6 === 4);
+    const equals6 = (count1 === 6) + (count2 === 6) + (count3 === 6) + (count4 === 6) + (count5 === 6) + (count6 === 6);
 
-const equals1 = (diceCount.match(/1/g) || "").length; // straight
-const equals6 = (diceCount.match(/6/g) || "").length; // yahtzee
-const equals2 = (diceCount.match(/2/g) || "").length;
-const equals4 = (diceCount.match(/4/g) || "").length;
-printOut("equals1: " + equals1.toString()); // straight
-printOut("equals2: " + equals2.toString());
-printOut("equals4: " + equals4.toString());
-printOut("equals6: " + equals6.toString()); // yahtzee
+    // Sjekker etter Full Straight (1-2-3-4-5-6 én gang hver)
+    if (!fullStraightFound) {
+        if (equals1 === 6) {
+            fullStraightFound = true;
+            printOut("Full Straight found after " + throwCountFullStraight + " throws.");
+        } else {
+            throwCountFullStraight++;
+        }
+    }
 
-let throwCount = 0;
- /*
-while(equals6 !== 1) {
-    throwCount++;
+    // Sjekker etter Yahtzee (alle like)
+    if (!yahtzeeFound) {
+        if (equals6 === 1) {
+            yahtzeeFound = true;
+            printOut("Yahtzee found after " + throwCountYahtzee + " throws.");
+        } else {
+            throwCountYahtzee++;
+        }
+    }
+
+    // Sjekker etter Tower (2 like og 4 like)
+    if (!towerFound) {
+        if (equals2 === 1 && equals4 === 1) {
+            towerFound = true;
+            printOut("Tower found after " + throwCountTower + " throws.");
+        } else {
+            throwCountTower++;
+        }
+    }
+
+    // Sjekker etter 3 Pairs (tre par)
+    if (!threePairsFound) {
+        if (equals2 === 3) {
+            threePairsFound = true;
+            printOut("3 Pairs found after " + throwCountThreePairs + " throws.");
+        } else {
+            throwCountThreePairs++;
+        }
+    }
 }
-printOut("Yatzy! It took " + throwCount + " throws to hit it.");
-*/
-if(equals1 === 6) {
-    printOut("Full straight");
-} else if(equals6 === 1) {
-    printOut("Yahtzee!");
-} else if(equals2 === 1 && equals4 === 1) {
-    printOut("Tower");
-} else if(equals2 === 3) {
-    printOut("3 pairs");
-} else {
-    printOut("Loser");
-}
 
-printOut(newLine);
-
-printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
-printOut(newLine);
-
-printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
-printOut(newLine);
-
-/* Task 10*/
-printOut("--- Part 10 ---------------------------------------------------------------------------------------------");
-/* Put your code below here!*/
-printOut("Replace this with you answer!");
 printOut(newLine);

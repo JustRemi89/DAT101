@@ -10,9 +10,31 @@
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
     <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
-    </ol>
+      <li>
+          <strong>In part 1, is it possible to solve the problem using a single "for" loop?</strong>
+          <p>
+              It is likely that this task involves generating two lines: one counting from 1 to 10 and the other counting from 10 to 1. Achieving both counting directions in a single "for" loop can be challenging, as they typically require separate iterations (one for counting up and one for counting down). However, with clever calculations, such as using one variable to count up and deriving the opposite count (10 minus the variable's value), we could potentially achieve it with one loop. This would be an interesting approach, but using two loops is often simpler and more readable.
+          </p>
+      </li>
+      <li>
+          <strong>In part 2, can we create what is known as an "infinite" loop within the condition of the "while" loop? Describe what would or would not be necessary to achieve this.</strong>
+          <p>
+              Yes, a "while" loop can become "infinite" if the condition never becomes false. This can be done by setting a condition that always evaluates to true, such as <code>while (true)</code>. Alternatively, the condition could rely on a variable that never changes in a way that makes the condition false. To prevent a true infinite loop, it is essential to have a mechanism, like updating a variable, that allows the loop to terminate after a certain state or number of iterations.
+          </p>
+      </li>
+      <li>
+          <strong>Discuss briefly how quickly or slowly a computer might be able to compute this, considering the number of guesses and the time it takes. How does the program behave while it is guessing? Can the program perform other tasks concurrently?</strong>
+          <p>
+              The speed of the guesses depends on the complexity of the task and the range of numbers. For example, guessing a number between 1 and 1 million will require more guesses than a range from 1 to 60. While the program is guessing, it will typically operate sequentially in most JavaScript environments (such as a browser), meaning it cannot perform other tasks simultaneously unless we use asynchronous programming (like <code>setTimeout</code> or <code>Promise</code> objects) to interrupt the guessing and allow time for other processes.
+          </p>
+      </li>
+      <li>
+          <strong>Explain the relationship between rows and columns in nested "for" loops. Can we, for instance, change the order, considering rows to be innermost or columns to be innermost, or does this not matter?</strong>
+          <p>
+              In a nested loop, the outer loop typically represents rows, and the inner loop represents columns. This pattern generally creates a matrix structure (like rows and columns). If we reverse the order, making columns the outer loop, it changes the order in which the elements are generated. In general, switching the row and column order does not make the structure incorrect, but the result may be perceived differently (for example, generating line by line or column by column).
+          </p>
+      </li>
+  </ol>
     <script type="module" src="./task_3-2.mjs" defer></script>
   </body>
 </html>

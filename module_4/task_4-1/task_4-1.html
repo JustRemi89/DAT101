@@ -9,10 +9,21 @@
     <div style="padding: 10px; min-width: 512px; border: darkblue thin solid; background-color: antiquewhite; font-family: 'Courier New', serif">
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
-    <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
-    </ol>
+    <h1>Discussion Questions and Answers</h1>
+
+    <h2>1. Why is object-oriented development so important in programming?</h2>
+    <p>Object-oriented development (OOD) makes code modular, reusable, and easier to maintain. It allows developers to model complex systems using objects that combine data and functionality, simplifying collaboration and system design.</p>
+
+    <h2>2. In Task 1, we create a static object called "AccountType." Explain what this object is used for and how this type of object can help us in software development.</h2>
+    <p>The <code>AccountType</code> object centralizes definitions of account types (e.g., Normal, Saving, Credit, Pension). It improves readability, reduces errors, and makes updates easier by replacing hardcoded strings with reusable constants like <code>AccountType.Normal</code>.</p>
+    <p>This approach ensures consistency and simplifies changes, as updates only need to be made in one place, reducing the risk of typos or mismatches in the code.</p>
+
+    <h2>3. Discuss why we use encapsulation in classes. Why do we want to "hide" code within our class? Explain how we can create "private" and "public" members in a constructor function.</h2>
+    <p>Encapsulation hides internal details of a class, exposing only the necessary parts through controlled methods. This improves security, ensures the integrity of data, and makes the class easier to maintain.</p>
+    <p>To create private members in JavaScript, use the <code>#</code> syntax or closures. Public members can be declared as normal properties or methods within the class.</p>
+
+    <h2>4. Explain what happens when we use the "new" command in JavaScript.</h2>
+    <p>The <code>new</code> command creates an instance of a class. It allocates memory, sets up the prototype chain, and calls the class's constructor function to initialize the object with any specified properties or methods.</p>
     <script type="module" src="./task_4-1.mjs" defer></script>
   </body>
 </html>

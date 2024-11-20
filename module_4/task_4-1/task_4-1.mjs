@@ -27,15 +27,12 @@ class TAccount {
     #balance;
     #withdrawCount;
     #currencyType;
-    constructor(aType){
+
+    constructor(aType) {
         this.#type = aType;
         this.#balance = 0;
         this.#withdrawCount = 0;
-        this.#currencyType = CurrencyTypes.NOK;
-    }
-
-    toString(){
-        return this.#type;
+        this.#currencyType = CurrencyTypes.NOK; // Standard NOK
     }
 
     setType(aType) {
@@ -46,49 +43,66 @@ class TAccount {
         printOut(text);
     }
 
-    getBalance() {
-        printOut("My account balance is " + this.#balance + " " + this.#currencyType.denomination);
+    #currencyConvert(amount, fromCurrency, toCurrency) {
+        const conversionRate = fromCurrency.value / toCurrency.value;
+        return parseFloat((amount / conversionRate).toFixed(2));
     }
 
-    deposit(aAmount) {
-        this.#balance += aAmount;
-        printOut("Deposit of " + aAmount + " " + this.#currencyType.denomination + ", new balance is " + this.#balance + " " + this.#currencyType.denomination);
+    setCurrencyType(newCurrency = CurrencyTypes.NOK) {
+        if (this.#currencyType === newCurrency) {
+            printOut(`The currency is already set to ${this.#currencyType.name}.`);
+            return this.#currencyType;
+        } else {
+            const oldCurrency = this.#currencyType;
+
+            // Oppdater saldo
+            this.#balance = this.#currencyConvert(this.#balance, oldCurrency, newCurrency);
+            this.#currencyType = newCurrency;
+
+            printOut(`The account currency has been changed from ${oldCurrency.name} to ${newCurrency.name}.`);
+            printOut(`New balance: ${this.#balance.toFixed(2)} ${newCurrency.denomination}`);
+            return this.#currencyType;
+        }
+    }
+
+    getBalance() {
+        printOut(`My account balance is ${this.#balance.toFixed(2)} ${this.#currencyType.denomination}`);
+    }
+
+    deposit(aAmount, aType = CurrencyTypes.NOK) {
+        const convertedAmount = this.#currencyConvert(aAmount, aType, this.#currencyType);
+        this.#balance += convertedAmount;
+        printOut(`Deposit of ${aAmount.toFixed(2)} ${aType.denomination} (${aType.name}), new balance is ${this.#balance.toFixed(2)} ${this.#currencyType.denomination}`);
         this.#withdrawCount = 0;
     }
 
-    withdraw(aAmount) {
+    withdraw(aAmount, aType = CurrencyTypes.NOK) {
+        const convertedAmount = this.#currencyConvert(aAmount, aType, this.#currencyType);
         let canWithdraw = true;
         let text = "";
-        switch (this.#type){
+        switch (this.#type) {
             case AccountType.Saving:
-                if(this.#withdrawCount < 3) {
+                if (this.#withdrawCount < 3) {
                     this.#withdrawCount++;
-                    canWithdraw = true;
                 } else {
                     canWithdraw = false;
-                    text = "Cannot withdraw more than 3 times from a " + this.#type + " account.";
+                    text = `Cannot withdraw more than 3 times from a ${this.#type} account.`;
                 }
                 break;
             case AccountType.Pension:
                 canWithdraw = false;
-                text = "Cannot withdraw from a " + this.#type + " account.";
+                text = `Cannot withdraw from a ${this.#type} account.`;
                 break;
         }
-        if(canWithdraw){
-            this.#balance -= aAmount;
-            printOut("Withdrawal of " + aAmount + " " + this.#currencyType.denomination + ", new balance is " + this.#balance + " " + this.#currencyType.denomination);
+        if (canWithdraw) {
+            if (this.#balance >= convertedAmount) {
+                this.#balance -= convertedAmount;
+                printOut(`Withdrawal of ${aAmount.toFixed(2)} ${aType.denomination} (${aType.name}), new balance is ${this.#balance.toFixed(2)} ${this.#currencyType.denomination}`);
+            } else {
+                printOut(`Insufficient funds for withdrawal.`);
+            }
         } else {
             printOut(text);
-        }
-    }
-
-    setCurrencyType(aType) {
-        if(this.#currencyType === aType) {
-            // Do nothing
-            return this.#currencyType;
-        } else {
-            this.#currencyType = aType;
-            return this.#currencyType;
         }
     }
 }
@@ -133,13 +147,26 @@ printOut("--- Part 5 -----------------------------------------------------------
 /* Put your code below here!*/
 myAccount.deposit(150);
 printOut(newLine);
-
+  
 printOut("--- Part 6 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+myAccount.setCurrencyType(CurrencyTypes.SEK); // Endre til SEK
+myAccount.getBalance();
+
+myAccount.setCurrencyType(CurrencyTypes.USD); // Endre til USD
+myAccount.getBalance();
+
+myAccount.setCurrencyType(); // Tilbake til NOK (standard)
+myAccount.getBalance();
+
 printOut(newLine);
 
 printOut("--- Part 7 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+myAccount.getBalance();
+myAccount.deposit(12, CurrencyTypes.USD);
+myAccount.withdraw(10, CurrencyTypes.GBP);
+myAccount.setCurrencyType(CurrencyTypes.CAD);
+myAccount.setCurrencyType(CurrencyTypes.INR);
+myAccount.withdraw(150.11, CurrencyTypes.SEK);
 printOut(newLine);

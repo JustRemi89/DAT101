@@ -36,7 +36,7 @@ class TBook {
     #Title;
     #Author;
     #ISBN;
-    constructor(aTitle, aAuthor, AISBN){
+    constructor(aTitle, aAuthor, aISBN){
     }
 }
 

@@ -32,7 +32,7 @@ function cutElement(aArray, aElement) {
     }
 }
 
-class TBook(){
+class TBook {
     #Title;
     #Author;
     #ISBN;

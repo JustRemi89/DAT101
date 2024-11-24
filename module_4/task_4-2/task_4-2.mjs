@@ -167,7 +167,6 @@ function printMultiDimArray(aArray) {
 printMultiDimArray(multiDimArray);
 
 
-
 printOut("--- Part 1 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
 printOut("For loop: " + numberString);

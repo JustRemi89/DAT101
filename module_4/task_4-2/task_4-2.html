@@ -9,10 +9,33 @@
     <div style="padding: 10px; min-width: 512px; border: darkblue thin solid; background-color: antiquewhite; font-family: 'Courier New', serif">
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
-    <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
-    </ol>
+    <div style="width:100%; max-width: 1000px;">
+    <h1>Discussion Points</h1>
+    
+    <h2>1. What is an array?</h2>
+    <p>An array is a data structure that stores multiple values in a single variable. These values are indexed, starting from 0, and can be of any data type (e.g., numbers, strings, objects). Arrays are useful for organizing data in a sequential manner.</p>
+
+    <h2>2. What does it mean to "hardcode" in programming?</h2>
+    <p>"Hardcoding" means embedding fixed values directly into the source code instead of using variables, parameters, or external data sources. While simple and quick, it reduces flexibility and maintainability.</p>
+
+    <h2>3. Explain in plain text what happens in task 3, and how we can traverse (iterate) the array when we (humans) don't "know" how long the array is.</h2>
+    <p>In Task 3, an array is created with pre-defined text split into individual words. Each word is stored as an element of the array. To traverse (iterate) the array without knowing its length, we use its <code>.length</code> property to dynamically control the loop.</p>
+
+    <h2>4. Why is it beneficial to store instances of a class in arrays, as in task 4?</h2>
+    <p>Storing class instances in arrays helps organize and manage data objects in a structured way. This makes it easier to apply operations like sorting, searching, or modifying the data. For example, in a library system, an array of book instances could be used to store and retrieve information about books.</p>
+
+    <h2>5. Explain the EWeekDays object from task 7.</h2>
+    <p>EWeekDays is an object that categorizes days of the week with attributes like <code>value</code> and <code>name</code>. Workdays and weekends combine multiple days using binary operations. To add a new category like "WorkoutDays," we can combine specific days using binary operations like OR.</p>
+
+    <h2>6. In task 8, we will use a "callback" routine when sorting. Explain how such a "callback" routine works.</h2>
+    <p>A "callback" routine is a function passed as an argument to another function and executed at a specific time. In sorting, the <code>sort()</code> method uses a callback to compare two elements, deciding their order based on the result of the comparison.</p>
+
+    <h2>7. What happens in the sorting routines you have created?</h2>
+    <p>The sorting routine repeatedly compares two elements (a and b) using the callback function. It decides their order by returning a value that indicates whether the first element should come before, after, or stay in the same position relative to the second element.</p>
+
+    <h2>8. In task 10, we will create an array with rows and columns. Explain what the first element of the array contains.</h2>
+    <p>In Task 10, the first element of the array is a row in a 2D grid, represented as another array. Each element of this row represents a column, containing values that describe their specific position in the grid.</p>
+  </div>
     <script type="module" src="./task_4-2.mjs" defer></script>
   </body>
 </html>

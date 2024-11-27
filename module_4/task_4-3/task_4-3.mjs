@@ -89,6 +89,15 @@ function createGirlNameDropdown() {
   }
 }
 
+// Funksjon for å hente valgt jentenavn
+function getSelectedGirlName() {
+  const dropdown = document.getElementById("selectTask6Girls");
+  const selectedName = dropdown.options[dropdown.selectedIndex].text;
+
+  // Oppdater tekst i output-elementet
+  document.getElementById("txtTask6Output").innerText = "Selected girl: " + selectedName;
+}
+
 const MovieGenre = [
   "Action",
   "Adventure",
@@ -197,6 +206,7 @@ document.getElementById("selectTask5Animals").addEventListener("change", getAnim
 //--- Part 6 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
 createGirlNameDropdown();
+document.getElementById("selectTask6Girls").addEventListener("change", getSelectedGirlName);
 
 //--- Part 7 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/

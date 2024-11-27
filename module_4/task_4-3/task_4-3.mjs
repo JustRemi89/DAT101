@@ -78,10 +78,17 @@ window.calculateRectangle = calculateRectangle;
 //--- Part 2 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
 const txtTask2Word = document.getElementById('txtTask2Word');
+let task2WordCounter = 0;
+// keydown har bedre støtte enn keypress (deprecated), så vi bruker det
 txtTask2Word.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter' || event.key === 'Return') {
-    console.log('Enter key pressed!');
-    
+  if ((event.key === 'Enter' || event.key === 'Return') && txtTask2Word.value !== '') {
+    console.log('Enter/Return key pressed!');
+    const word = txtTask2Word.value;
+    const HTMLword = "<p>" + word + "</p>";
+    document.getElementById('divTask2Words').innerHTML += HTMLword;
+    task2WordCounter++;
+    document.getElementById('task2WordCounter').innerText = task2WordCounter;
+    document.getElementById('txtTask2Word').value = '';
   }
 });
 

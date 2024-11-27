@@ -94,6 +94,25 @@ txtTask2Word.addEventListener('keydown', (event) => {
 
 //--- Part 3 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+function checkTask3Answers() {
+  const checkboxes = document.querySelectorAll('input[name="chkTask3"]');
+  const selectedValues = [];
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      selectedValues.push(checkbox.value);
+    }
+  });
+
+  const outputElement = document.getElementById('txtTask3Output');
+
+  if (selectedValues.length > 0) {
+    outputElement.innerText = "Selected: " + selectedValues.join(', ');
+  } else {
+    outputElement.innerText = "Please select at least one";
+  }
+}
+document.getElementById('cmbTask3CheckAnswer').addEventListener('click', checkTask3Answers);
+
 
 //--- Part 4 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/

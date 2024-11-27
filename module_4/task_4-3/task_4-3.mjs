@@ -45,6 +45,10 @@ const MovieGenre = [
   "Western",
 ];
 
+
+
+//--- Part 1 ----------------------------------------------------------------------------------------------
+/* Put your code below here! */
 const txtRectWidth = document.getElementById("txtRectWidth");
 const txtRectHeight = document.getElementById("txtRectHeight");
 
@@ -68,13 +72,18 @@ function calculateRectangle() {
   document.getElementById("task1Circumference").innerText = circumference;
   document.getElementById("task1Area").innerText = area;
 }
-
-//--- Part 1 ----------------------------------------------------------------------------------------------
-/* Create code in cmbTask1CalculateClick to calculate the perimeter and area of the given rectangle. */
-
+// Gjør funksjonen global
+window.calculateRectangle = calculateRectangle;
 
 //--- Part 2 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+const txtTask2Word = document.getElementById('txtTask2Word');
+txtTask2Word.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === 'Return') {
+    console.log('Enter key pressed!');
+    
+  }
+});
 
 //--- Part 3 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/

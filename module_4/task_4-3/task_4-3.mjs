@@ -16,6 +16,34 @@ const CarTypes = [
   { value: 13, caption: "Nissan" },
 ];
 
+// Funksjon for å lage radioknapper dynamisk
+function createCarRadioButtons() {
+  const container = document.getElementById("divTask4Cars");
+
+  for (let i = 0; i < CarTypes.length; i++) {
+    const car = CarTypes[i];
+
+    // Lag radioknapp
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "carType";
+    radio.value = car.value;
+    radio.id = "car-" + car.value;
+
+    // Lag label
+    const label = document.createElement("label");
+    label.htmlFor = radio.id;
+    label.innerText = car.caption;
+
+    // Legg til radioknapp og label i container
+    container.appendChild(radio);
+    container.appendChild(label);
+    container.appendChild(document.createElement("br"));
+  }
+}
+// Utfør funksjonen for å lage radioknapper ved innlasting av siden
+createCarRadioButtons();
+
 const GirlsNames = ["Anne", "Inger", "Kari", "Marit", "Ingrid", "Liv", "Eva", "Berit", "Astrid", "Bjørg", "Hilde", "Anna", "Solveig", "Marianne", "Randi", "Ida", "Nina", "Maria", "Elisabeth", "Kristin"];
 
 const MovieGenre = [

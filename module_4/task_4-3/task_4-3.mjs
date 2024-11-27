@@ -41,8 +41,6 @@ function createCarRadioButtons() {
     container.appendChild(document.createElement("br"));
   }
 }
-// Utfør funksjonen for å lage radioknapper ved innlasting av siden
-createCarRadioButtons();
 
 // Funksjon for å hente valgt biltype
 function getSelectedCarType() {
@@ -63,7 +61,33 @@ document.addEventListener("change", event => {
   }
 });
 
+// Funksjon for å finne og returnere endring av valg i animal-dropdown
+function getAnimalSelection() {
+  const dropdown = document.getElementById('selectTask5Animals');
+  const selectedAnimal = dropdown.options[dropdown.selectedIndex].text;
+
+  // Oppdater tekst i output-elementet
+  document.getElementById('txtTask5Output').innerText = "Selected animal: " + selectedAnimal;
+}
+
 const GirlsNames = ["Anne", "Inger", "Kari", "Marit", "Ingrid", "Liv", "Eva", "Berit", "Astrid", "Bjørg", "Hilde", "Anna", "Solveig", "Marianne", "Randi", "Ida", "Nina", "Maria", "Elisabeth", "Kristin"];
+
+// Funksjon for å lage dropdown med jentenavn
+function createGirlNameDropdown() {
+  const dropdown = document.getElementById("selectTask6Girls");
+
+  for (let i = 0; i < GirlsNames.length; i++) {
+    const name = GirlsNames[i];
+
+    // Lag option-element
+    const option = document.createElement("option");
+    option.value = i;
+    option.innerText = name;
+
+    // Legg til option i dropdown
+    dropdown.appendChild(option);
+  }
+}
 
 const MovieGenre = [
   "Action",
@@ -163,12 +187,16 @@ document.getElementById('cmbTask3CheckAnswer').addEventListener('click', checkTa
 
 //--- Part 4 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+// Utfør funksjonen for å lage radioknapper ved innlasting av siden
+createCarRadioButtons();
 
 //--- Part 5 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+document.getElementById("selectTask5Animals").addEventListener("change", getAnimalSelection);
 
 //--- Part 6 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/
+createGirlNameDropdown();
 
 //--- Part 7 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/

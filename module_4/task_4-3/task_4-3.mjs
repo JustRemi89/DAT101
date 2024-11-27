@@ -125,6 +125,58 @@ const MovieGenre = [
   "Western",
 ];
 
+// Funksjon for å lage dropdown med filmsjangre
+function createMovieGenreDropdown() {
+  const dropdown = document.getElementById("selectMovieGenre");
+
+  for (let i = 0; i < MovieGenre.length; i++) {
+    const genre = MovieGenre[i];
+
+    // Lag option-element
+    const option = document.createElement("option");
+    option.value = i;
+    option.innerText = genre;
+
+    // Legg til option i dropdown
+    dropdown.appendChild(option);
+  }
+}
+
+// Funksjon for å legge til film i tabellen
+function addMovie() {
+  const txtMovieTitle = document.getElementById("txtMovieTitle").value;
+  const selectMovieGenre = MovieGenre[document.getElementById("selectMovieGenre").value];
+  const txtMovieDirector = document.getElementById("txtMovieDirector").value;
+  const txtMovieRating = document.getElementById("txtMovieRate").value;
+
+  // Valider at alle feltene er fylt ut
+  if (!txtMovieTitle || !selectMovieGenre || !txtMovieDirector || isNaN(txtMovieRating) || txtMovieRating < 1 || txtMovieRating > 10) {
+      alert("Please fill in all fields correctly. Rating must be between 1 and 10.");
+      return;
+  }
+
+  // Hent tabellen
+  const tblMovies = document.getElementById("tblMovies");
+
+  // Finn antall rader i tabellen for nummerering av rad
+  const rowNumber = tblMovies.rows.length;
+
+  // Lag ny rad
+  const row = tblMovies.insertRow();
+
+  // Legg til celler i raden og sett inn verdier
+  row.insertCell(0).innerText = rowNumber;
+  row.insertCell(1).innerText = txtMovieTitle;
+  row.insertCell(2).innerText = selectMovieGenre;
+  row.insertCell(3).innerText = txtMovieDirector;
+  row.insertCell(4).innerText = txtMovieRating;
+
+  // Nullstill input-feltene
+  document.getElementById("txtMovieTitle").value = "";
+  document.getElementById("selectMovieGenre").value = 0;
+  document.getElementById("txtMovieDirector").value = "";
+  document.getElementById("txtMovieRating").value = "5";
+}
 
 
 //--- Part 1 ----------------------------------------------------------------------------------------------
@@ -209,4 +261,10 @@ createGirlNameDropdown();
 document.getElementById("selectTask6Girls").addEventListener("change", getSelectedGirlName);
 
 //--- Part 7 ----------------------------------------------------------------------------------------------
-/* Put your code below here!*/
+/* Use the data from filmtittel (movie title), filmsjanger (movie genre), filmregissør (movie
+director), and filmrate (movie rating) and fill in the HTML table every time the user clicks the
+"cmbAddMovie" button. Fill in the data from the MovieGenre array in selectMovieGenre. */
+
+// Utfør funksjonen for å lage dropdown med filmsjangre ved innlasting av siden
+createMovieGenreDropdown();
+document.getElementById('cmbAddMovie').addEventListener('click', addMovie);

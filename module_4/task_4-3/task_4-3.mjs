@@ -27,8 +27,8 @@ function createCarRadioButtons() {
     const radio = document.createElement("input");
     radio.type = "radio";
     radio.name = "carType";
-    radio.value = car.value;
-    radio.id = "car-" + car.value;
+    radio.value = car.caption;
+    radio.id = "car-" + car.caption;
 
     // Lag label
     const label = document.createElement("label");
@@ -43,6 +43,25 @@ function createCarRadioButtons() {
 }
 // Utfør funksjonen for å lage radioknapper ved innlasting av siden
 createCarRadioButtons();
+
+// Funksjon for å hente valgt biltype
+function getSelectedCarType() {
+  const selectedCar = document.querySelector('input[name="carType"]:checked');
+  const outputElement = document.getElementById("txtTask4Output");
+
+  if (selectedCar) {
+    outputElement.innerText = "Selected car: " + selectedCar.value;
+  } else { // Blir mest sannsynlig aldri kjørt, men bare i tilfelle...
+    outputElement.innerText = "Please select a car";
+  }
+}
+
+// Legg til eventlistener for change-event på radioknappene
+document.addEventListener("change", event => {
+  if (event.target.name === "carType") {
+    getSelectedCarType();
+  }
+});
 
 const GirlsNames = ["Anne", "Inger", "Kari", "Marit", "Ingrid", "Liv", "Eva", "Berit", "Astrid", "Bjørg", "Hilde", "Anna", "Solveig", "Marianne", "Randi", "Ida", "Nina", "Maria", "Elisabeth", "Kristin"];
 

@@ -45,8 +45,33 @@ const MovieGenre = [
   "Western",
 ];
 
+const txtRectWidth = document.getElementById("txtRectWidth");
+const txtRectHeight = document.getElementById("txtRectHeight");
+
+// Funksjon som trigges ved knappeklikk
+function calculateRectangle() {
+  // Hent verdier fra input-feltene
+  const width = parseFloat(document.getElementById("txtRectWidth").value);
+  const height = parseFloat(document.getElementById("txtRectHeight").value);
+
+  // Valider at begge verdiene er gyldige tall
+  if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
+      alert("Please enter valid positive numbers for width and height.");
+      return;
+  }
+
+  // Beregn omkrets og areal
+  const circumference = 2 * (width + height);
+  const area = width * height;
+
+  // Oppdater <span>-elementene i HTML for å vise resultatene
+  document.getElementById("task1Circumference").innerText = circumference;
+  document.getElementById("task1Area").innerText = area;
+}
+
 //--- Part 1 ----------------------------------------------------------------------------------------------
-/* Put your code below here!*/
+/* Create code in cmbTask1CalculateClick to calculate the perimeter and area of the given rectangle. */
+
 
 //--- Part 2 ----------------------------------------------------------------------------------------------
 /* Put your code below here!*/

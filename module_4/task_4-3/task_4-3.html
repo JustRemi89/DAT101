@@ -13,9 +13,9 @@
   <input type="number" id="txtRectWidth" value="0" style="width:4em">
   <label for="txtRectHeight">Height:</label>
   <input type="number" id="txtRectHeight" value="0" style="width:4em">
-  <input type="button" id="cmbTask1Calculate" value="Calculate">
+  <input type="button" id="cmbTask1Calculate" value="Calculate" onclick="calculateRectangle()">
   <p id="txtTask1Output">
-    Circumference = 0, Area = 0
+    Circumference = <span id="task1Circumference">0</span>, Area = <span id="task1Area">0</span>
   </p>
 </fieldset>
 <p></p>

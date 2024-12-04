@@ -66,11 +66,17 @@ const EWeekDays = {
     Weekends: {value: 0x20 + 0x40, name: "Helg"}
 }
 
-// Function to print out the weekdays
-function printEWeekDays() {
+// Function to print out the weekdays (misunderstood task)
+/*function printEWeekDays() {
     Object.keys(EWeekDays).forEach(key => {
         printOut(EWeekDays[key].name + " has a value of " + EWeekDays[key].value + ".");
     });
+}*/
+
+// Function to print out the weekdays
+function printEWeekDays() {
+    const keys = Object.keys(EWeekDays); //Dette gir oss alle nøklene i objektet EWeekDays
+    printOut("Keys: " + keys.join(", ")); // Her printer vi ut alle nøklene i objektet EWeekDays
 }
 
 // Function to generate an array with 35 random numbers between 1 and 20

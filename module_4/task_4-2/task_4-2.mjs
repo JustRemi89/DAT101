@@ -91,14 +91,6 @@ function generateRandomNumbers(size, min, max) {
 // Generate random numbers
 const randomNumbers = generateRandomNumbers(35, 1, 20);
 
-// Sorter i stigende rekkefølge ved hjelp av callback-funksjon
-// Callback-funksjonen sammenligner to verdier 'a' og 'b'.
-// Hvis a - b < 0, plasseres 'a' før 'b'. Hvis a - b > 0, plasseres 'b' før 'a'.
-const ascendingNumbers = randomNumbers.sort((a, b) => a - b);
-
-// Sorter i synkende rekkefølge ved hjelp av callback-funksjon
-const descendingNumbers = randomNumbers.sort((a, b) => b - a);
-
 // Analyze frequency of numbers and sort by frequency
 function calculateFrequencies(aArray) {
     const frequencyMap = {};
@@ -169,9 +161,6 @@ function printMultiDimArray(aArray) {
     }
 }
 
-// Call the function to print the array
-printMultiDimArray(multiDimArray);
-
 
 printOut("--- Part 1 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
@@ -223,8 +212,10 @@ printOut(newLine);
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Random numbers: " + randomNumbers.join(", "));
-printOut("Ascending: " + ascendingNumbers.join(", "));
+printOut(randomNumbers.join(", "));
+const ascendingNumbers = randomNumbers.sort((a, b) => a - b);
+printOut("Ascending:: " + ascendingNumbers.join(", "));
+const descendingNumbers = randomNumbers.sort((a, b) => b - a);
 printOut("Descending: " + descendingNumbers.join(", "));
 printOut(newLine);
 

@@ -165,13 +165,26 @@ for(let index = 0; index < keys.length; index++){
   }
   printOut(text);
 }
+
+const randomNumbers = [];
+for(let j = 0; j < 35; j++){
+  const randomValue = Math.ceil(Math.random() * 20);
+  randomNumbers.push(randomValue);
+}
+
+
+
 printOut(newLine);
 
 
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+printOut(randomNumbers.join(", "));
+const ascendingNumbers = randomNumbers.sort((a, b) => a - b);
+printOut("Ascending:: " + ascendingNumbers.join(", "));
+const descendingNumbers = randomNumbers.sort((a, b) => b - a);
+printOut("Descending: " + descendingNumbers.join(", "));
 printOut(newLine);
 
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");

@@ -31,6 +31,7 @@ export const SpriteInfoList = {
 export const GameProps = {
   soundMuted: false,
   dayTime: true,
+  speed: 1,
   background: null,
   ground: null
 };

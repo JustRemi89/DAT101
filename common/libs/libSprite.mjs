@@ -59,6 +59,14 @@ class TSprite {
     this.#pos.x += aDx;
     this.#pos.y += aDy;
   }
+
+  get posX() {
+    return this.#pos.x;
+  }
+
+  get posY() {
+    return this.#pos.y;
+  }
 } // End of TSprite class
 
 export default {

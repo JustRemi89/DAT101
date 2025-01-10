@@ -69,6 +69,7 @@ function drawGame() {
 
 function animateGame() {
   GameProps.ground.translate(-GameProps.speed, 0);
+  
 }
 
 //--------------- Event Handlers -----------------------------------------//

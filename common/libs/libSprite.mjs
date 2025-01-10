@@ -75,6 +75,11 @@ class TSprite {
   set posY(aY) {
     this.#pos.y = aY;
   }
+
+  setPos(aX, aY) {
+    this.#pos.x = aX;
+    this.#pos.y = aY;
+  }
 } // End of TSprite class
 
 export default {

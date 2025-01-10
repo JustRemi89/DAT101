@@ -43,6 +43,12 @@ class TSprite {
   #spcvs; // SpriteCanvas
   #spi; // SpriteInfo
   constructor(aSpriteCanvas, aSpriteInfo) {
+    this.#spcvs = aSpriteCanvas;
+    this.#spi = aSpriteInfo;
+  }
+
+  draw() {
+    this.#spcvs.drawSprite(this.#spi);
   }
 } // End of TSprite class
 

@@ -68,7 +68,7 @@ class TSprite {
     return this.#pos.y;
   }
 
-  set pos(aX, aY) {
+  setPos(aX, aY) {
     this.#pos.x = aX;
     this.#pos.y = aY;
   }

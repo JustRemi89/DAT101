@@ -42,9 +42,11 @@ class TSpriteCanvas {
 class TSprite {
   #spcvs; // SpriteCanvas
   #spi; // SpriteInfo
-  constructor(aSpriteCanvas, aSpriteInfo) {
+  #destination;
+  constructor(aSpriteCanvas, aSpriteInfo, aDestination) {
     this.#spcvs = aSpriteCanvas;
     this.#spi = aSpriteInfo;
+    this.#destination = aDestination;
   }
 
   draw() {

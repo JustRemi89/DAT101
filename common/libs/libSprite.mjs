@@ -54,6 +54,11 @@ class TSprite {
   draw() {
     this.#spcvs.drawSprite(this.#spi, this.#pos.x, this.#pos.y, this.#index);
   }
+
+  translate(aDx, aDy) {
+    this.#pos.x += aDx;
+    this.#pos.y += aDy;
+  }
 } // End of TSprite class
 
 export default {

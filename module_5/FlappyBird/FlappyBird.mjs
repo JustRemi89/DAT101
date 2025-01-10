@@ -33,7 +33,8 @@ export const GameProps = {
   dayTime: true,
   speed: 1,
   background: null,
-  ground: null
+  ground: null,
+  hero: null
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -56,6 +57,10 @@ function loadGame(){
   pos.y = cvs.height - SpriteInfoList.ground.height;
   GameProps.ground = new libSprite.TSprite(spcvs, SpriteInfoList.ground, pos);
 
+  pos.x = 100;
+  pos.y = 100;
+  GameProps.hero = new libSprite.TSprite(spcvs, SpriteInfoList.hero1, pos);
+
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
 }
@@ -64,6 +69,7 @@ function drawGame() {
   spcvs.clearCanvas();
   GameProps.background.draw();
   GameProps.ground.draw();
+  GameProps.hero.draw();
   requestAnimationFrame(drawGame);
 }
 

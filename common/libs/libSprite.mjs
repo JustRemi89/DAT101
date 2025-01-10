@@ -1,5 +1,5 @@
 "use strict";
-
+import lib2d from "./lib2d.mjs";
 /**
  * @library libSprite
  * @description A library for classes that manage sprite animations.
@@ -42,15 +42,17 @@ class TSpriteCanvas {
 class TSprite {
   #spcvs; // SpriteCanvas
   #spi; // SpriteInfo
-  #destination;
-  constructor(aSpriteCanvas, aSpriteInfo, aDestination) {
+  #pos; // Position
+  #index; // Index
+  constructor(aSpriteCanvas, aSpriteInfo, aPosition) {
     this.#spcvs = aSpriteCanvas;
     this.#spi = aSpriteInfo;
-    this.#destination = aDestination;
+    this.#pos = aPosition.clone(); // Vi trenger en kopi av posisjonen
+    this.#index = 0;
   }
 
   draw() {
-    this.#spcvs.drawSprite(this.#spi);
+    this.#spcvs.drawSprite(this.#spi, this.#pos.x, this.#pos.y, this.#index);
   }
 } // End of TSprite class
 
@@ -64,4 +66,14 @@ export default {
    * @param {function} aLoadedFinal - A callback function to call when the image is done loading.
    */
   TSpriteCanvas: TSpriteCanvas,
+  
+  /**
+   * @class TSprite
+   * @description A class that manage
+   * @param {TSpriteCanvas} aSpriteCanvas - The sprite canvas to use.
+   * @param {object} aSpriteInfo - The sprite info object.
+   * @param {TPosition} aPosition - The position of the sprite.
+   * @function draw - Draws the sprite on the canvas.
+   */
+  TSprite: TSprite
 };

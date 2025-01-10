@@ -39,6 +39,13 @@ class TSpriteCanvas {
   }
 }
 
+class TSprite {
+  #spcvs; // SpriteCanvas
+  #spi; // SpriteInfo
+  constructor(aSpriteCanvas, aSpriteInfo) {
+  }
+} // End of TSprite class
+
 export default {
   /**
    * @class TSpriteCanvas

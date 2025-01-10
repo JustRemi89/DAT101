@@ -69,8 +69,8 @@ function drawGame() {
 
 function animateGame() {
   GameProps.ground.translate(-GameProps.speed, 0);
-  if (GameProps.ground.pos.x < -SpriteInfoList.ground.width) {
-    GameProps.ground.pos.x = 0;
+  if (GameProps.ground.posX <= -SpriteInfoList.background.width) {
+    GameProps.ground.setPos();
   }
 }
 

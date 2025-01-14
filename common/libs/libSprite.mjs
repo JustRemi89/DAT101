@@ -94,6 +94,10 @@ class TSprite {
     this.#pos.y = aY;
   }
 
+  get index() {
+    return this.#index;
+  }
+
   set index(aIndex) {
     this.#index = aIndex;
   }

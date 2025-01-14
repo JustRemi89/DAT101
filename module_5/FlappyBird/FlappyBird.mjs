@@ -65,9 +65,9 @@ function loadGame(){
   GameProps.hero = new THero(spcvs, SpriteInfoList.hero1, pos);
 
   pos.x = 300;
-  pos.y = 50;
+  pos.y = 300;
   const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle, pos);
-  obstacle.index = 2;
+  //obstacle.index = 2;
   GameProps.obstacles.push(obstacle);
 
   requestAnimationFrame(drawGame);
@@ -77,9 +77,9 @@ function loadGame(){
 function drawGame() {
   spcvs.clearCanvas();
   GameProps.background.draw();
+  drawObstacles();
   GameProps.ground.draw();
   GameProps.hero.draw();
-  drawObstacles();
   requestAnimationFrame(drawGame);
 }
 

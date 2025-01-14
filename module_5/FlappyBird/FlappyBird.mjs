@@ -105,10 +105,19 @@ function setDayNight() {
   }
 } // end of setDayNight
 
+function onKeyDown(aEvent) {
+  switch(aEvent.code) {
+    case "Space":
+      GameProps.hero.flap();
+      break;
+  }
+}
+
 //--------------- Main Code ----------------------------------------------//
 chkMuteSound.addEventListener("change", setSoundOnOff);
 rbDayNight[0].addEventListener("change", setDayNight);
 rbDayNight[1].addEventListener("change", setDayNight);
+document.addEventListener("keydown", onKeyDown);
 
 // Load the sprite sheet
 spcvs.loadSpriteSheet("./Media/FlappyBirdSprites.png", loadGame)

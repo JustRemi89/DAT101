@@ -59,22 +59,17 @@ function loadGame(){
   GameProps.background = new libSprite.TSprite(spcvs, SpriteInfoList.background, pos);
   pos.y = cvs.height - SpriteInfoList.ground.height;
   GameProps.ground = new libSprite.TSprite(spcvs, SpriteInfoList.ground, pos);
-
   pos.x = 100;
   pos.y = 100;
   GameProps.hero = new THero(spcvs, SpriteInfoList.hero1, pos);
 
-  pos.x = 300;
-  pos.y = 300;
-  const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle, pos);
-  //obstacle.index = 2;
-  GameProps.obstacles.push(obstacle);
+  spawnObstacle();
 
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
 }
 
-function drawGame() {
+function drawGame(){
   spcvs.clearCanvas();
   GameProps.background.draw();
   drawObstacles();
@@ -83,20 +78,38 @@ function drawGame() {
   requestAnimationFrame(drawGame);
 }
 
-function drawObstacles() {
-  for (let i = 0; i < GameProps.obstacles.length; i++) {
+function drawObstacles(){
+  for(let i = 0; i < GameProps.obstacles.length; i++){
     const obstacle = GameProps.obstacles[i];
     obstacle.draw();
   }
 }
 
-function animateGame() {
+function animateGame(){
   GameProps.ground.translate(-GameProps.speed, 0);
-  if (GameProps.ground.posX <= -SpriteInfoList.background.width) {
+  if(GameProps.ground.posX <= -SpriteInfoList.background.width){
     GameProps.ground.posX = 0;
   }
   GameProps.hero.update();
+  let delObstacleIndex = -1;
+  for(let i = 0; i < GameProps.obstacles.length; i++){
+    const obstacle = GameProps.obstacles[i];
+    obstacle.update();
+    if(obstacle.posX < -100){
+      delObstacleIndex = i;
+    }
+  }
+  if(delObstacleIndex >= 0){
+    GameProps.obstacles.splice(delObstacleIndex, 1);
+  }
+}
 
+function spawnObstacle(){
+  const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle);
+  GameProps.obstacles.push(obstacle);
+  // Spawn a new obstacle in 2-7 seconds
+  const seconds = Math.ceil(Math.random() * 5) + 2;
+  setTimeout(spawnObstacle, seconds * 1000);
 }
 
 //--------------- Event Handlers -----------------------------------------//
@@ -121,8 +134,8 @@ function setDayNight() {
   }
 } // end of setDayNight
 
-function onKeyDown(aEvent) {
-  switch(aEvent.code) {
+function onKeyDown(aEvent){
+  switch(aEvent.code){
     case "Space":
       GameProps.hero.flap();
       break;
@@ -133,7 +146,7 @@ function onKeyDown(aEvent) {
 chkMuteSound.addEventListener("change", setSoundOnOff);
 rbDayNight[0].addEventListener("change", setDayNight);
 rbDayNight[1].addEventListener("change", setDayNight);
-document.addEventListener("keydown", onKeyDown);
 
 // Load the sprite sheet
-spcvs.loadSpriteSheet("./Media/FlappyBirdSprites.png", loadGame)
+spcvs.loadSpriteSheet("./Media/FlappyBirdSprites.png", loadGame);
+document.addEventListener("keydown", onKeyDown);  

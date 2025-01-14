@@ -3,6 +3,7 @@ import lib2d from "../../common/libs/lib2d.mjs";
 import libSound from "../../common/libs/libSound.mjs";
 import libSprite from "../../common/libs/libSprite.mjs";
 import THero from "./hero.mjs";
+import TObstacle from "./obstacle.mjs";
 
 
 //--------------- Objects and Variables ----------------------------------//
@@ -35,7 +36,8 @@ export const GameProps = {
   speed: 1,
   background: null,
   ground: null,
-  hero: null
+  hero: null,
+  obstacles: [],
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -62,6 +64,12 @@ function loadGame(){
   pos.y = 100;
   GameProps.hero = new THero(spcvs, SpriteInfoList.hero1, pos);
 
+  pos.x = 300;
+  pos.y = 50;
+  const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle, pos);
+  obstacle.index = 2;
+  GameProps.obstacles.push(obstacle);
+
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
 }
@@ -71,7 +79,15 @@ function drawGame() {
   GameProps.background.draw();
   GameProps.ground.draw();
   GameProps.hero.draw();
+  drawObstacles();
   requestAnimationFrame(drawGame);
+}
+
+function drawObstacles() {
+  for (let i = 0; i < GameProps.obstacles.length; i++) {
+    const obstacle = GameProps.obstacles[i];
+    obstacle.draw();
+  }
 }
 
 function animateGame() {

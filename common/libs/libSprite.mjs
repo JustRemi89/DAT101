@@ -93,6 +93,10 @@ class TSprite {
     this.#pos.x = aX;
     this.#pos.y = aY;
   }
+
+  set index(aIndex) {
+    this.#index = aIndex;
+  }
 } // End of TSprite class
 
 export default {

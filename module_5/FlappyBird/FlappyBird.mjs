@@ -2,6 +2,7 @@
 import lib2d from "../../common/libs/lib2d.mjs";
 import libSound from "../../common/libs/libSound.mjs";
 import libSprite from "../../common/libs/libSprite.mjs";
+import THero from "./hero.mjs";
 
 
 //--------------- Objects and Variables ----------------------------------//
@@ -59,7 +60,7 @@ function loadGame(){
 
   pos.x = 100;
   pos.y = 100;
-  GameProps.hero = new libSprite.TSprite(spcvs, SpriteInfoList.hero1, pos);
+  GameProps.hero = new libSprite.THero(spcvs, SpriteInfoList.hero1, pos);
   GameProps.hero.animateSpeed = 10; // Max 99
 
   requestAnimationFrame(drawGame);

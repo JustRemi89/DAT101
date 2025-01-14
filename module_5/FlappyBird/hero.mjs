@@ -13,7 +13,8 @@ class THero extends libSprite.TSprite {
     }
 
     update() {
-        const maxFall = SpriteInfoList.ground.y - SpriteInfoList.ground.height - SpriteInfoList.hero1.height;
+        const groundPosY = GameProps.ground.posY;
+        const maxFall = groundPosY - SpriteInfoList.hero1.height;
         if(this.posY < maxFall) {
             this.translate(0, 1);
         } else {

@@ -60,6 +60,7 @@ function loadGame(){
   pos.x = 100;
   pos.y = 100;
   GameProps.hero = new libSprite.TSprite(spcvs, SpriteInfoList.hero1, pos);
+  GameProps.hero.animateSpeed = 10; // Max 99
 
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
@@ -78,6 +79,7 @@ function animateGame() {
   if (GameProps.ground.posX <= -SpriteInfoList.background.width) {
     GameProps.ground.posX = 0;
   }
+
 }
 
 //--------------- Event Handlers -----------------------------------------//

@@ -60,8 +60,7 @@ function loadGame(){
 
   pos.x = 100;
   pos.y = 100;
-  GameProps.hero = new libSprite.THero(spcvs, SpriteInfoList.hero1, pos);
-  GameProps.hero.animateSpeed = 10; // Max 99
+  GameProps.hero = new THero(spcvs, SpriteInfoList.hero1, pos);
 
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
@@ -80,6 +79,7 @@ function animateGame() {
   if (GameProps.ground.posX <= -SpriteInfoList.background.width) {
     GameProps.ground.posX = 0;
   }
+  GameProps.hero.update();
 
 }
 

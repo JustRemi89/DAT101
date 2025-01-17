@@ -37,7 +37,7 @@ export const GameProps = {
   background: null,
   ground: null,
   hero: null,
-  obstacles: [],
+  obstacles: []
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -86,6 +86,10 @@ function drawObstacles(){
 }
 
 function animateGame(){
+  if(GameProps.hero.isDead){
+    GameProps.hero.animateSpeed = 0;
+    GameProps.hero.update();
+  }
   GameProps.ground.translate(-GameProps.speed, 0);
   if(GameProps.ground.posX <= -SpriteInfoList.background.width){
     GameProps.ground.posX = 0;
@@ -137,7 +141,7 @@ function setDayNight() {
 function onKeyDown(aEvent){
   switch(aEvent.code){
     case "Space":
-      GameProps.hero.flap();
+      if(!GameProps.hero.isDead) GameProps.hero.flap();
       break;
   }
 }

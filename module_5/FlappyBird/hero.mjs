@@ -10,6 +10,7 @@ class THero extends libSprite.TSprite {
         super(aSpriteCanvas, aSpriteInfo, aPosition);
         this.#spi = aSpriteInfo;
         this.animateSpeed = 10; // Max 99
+        this.isDead = false;
     }
 
     draw() {

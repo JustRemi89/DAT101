@@ -30,10 +30,18 @@ export const SpriteInfoList = {
   medal:        { x:  985, y: 635, width:   44, height:  44, count:  4 },
 };
 
+export const EGameStatus = {
+  idle: 0,
+  getReady: 1,
+  playing: 2,
+  gameOver: 3
+}
+
 export const GameProps = {
   soundMuted: false,
   dayTime: true,
   speed: 1,
+  status: EGameStatus.playing, // For testing, normally EGameStatus.idle
   background: null,
   ground: null,
   hero: null,
@@ -89,6 +97,7 @@ function animateGame(){
   if(GameProps.hero.isDead){
     GameProps.hero.animateSpeed = 0;
     GameProps.hero.update();
+    return;
   }
   GameProps.ground.translate(-GameProps.speed, 0);
   if(GameProps.ground.posX <= -SpriteInfoList.background.width){

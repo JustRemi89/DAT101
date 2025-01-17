@@ -1,6 +1,7 @@
 "use strict";
 import libSprite from "../../common/libs/libSprite.mjs";
 import { GameProps } from "./FlappyBird.mjs";
+import { EGameStatus } from "./FlappyBird.mjs";
 
 class THero extends libSprite.TSprite {
     #spi;
@@ -11,6 +12,7 @@ class THero extends libSprite.TSprite {
         this.#spi = aSpriteInfo;
         this.animateSpeed = 10; // Max 99
         this.isDead = false;
+        this.rotation = 45;
     }
 
     draw() {
@@ -26,9 +28,12 @@ class THero extends libSprite.TSprite {
                 this.#velocity = 0;
             }
             this.translate(0, this.#velocity);
+            this.rotation = this.#velocity * 10;
             this.#velocity += this.#gravity;
         } else {
             this.posY = groundY - this.#spi.height;
+            GameProps.status = EGameStatus.gameOver;
+            this.animateSpeed = 0;
         }
     }
 

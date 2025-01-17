@@ -94,27 +94,31 @@ function drawObstacles(){
 }
 
 function animateGame(){
-  if(GameProps.hero.isDead){
-    GameProps.hero.animateSpeed = 0;
-    GameProps.hero.update();
-    return;
-  }
-  GameProps.ground.translate(-GameProps.speed, 0);
-  if(GameProps.ground.posX <= -SpriteInfoList.background.width){
-    GameProps.ground.posX = 0;
-  }
-  GameProps.hero.update();
-  let delObstacleIndex = -1;
-  for(let i = 0; i < GameProps.obstacles.length; i++){
-    const obstacle = GameProps.obstacles[i];
-    obstacle.update();
-    if(obstacle.posX < -100){
-      delObstacleIndex = i;
+  switch(GameProps.status){
+    case EGameStatus.playing:
+      if(GameProps.hero.isDead){
+        GameProps.hero.animateSpeed = 0;
+        GameProps.hero.update();
+        return;
+      }
+      GameProps.ground.translate(-GameProps.speed, 0);
+      if(GameProps.ground.posX <= -SpriteInfoList.background.width){
+        GameProps.ground.posX = 0;
+      }
+      GameProps.hero.update();
+      let delObstacleIndex = -1;
+      for(let i = 0; i < GameProps.obstacles.length; i++){
+        const obstacle = GameProps.obstacles[i];
+        obstacle.update();
+        if(obstacle.posX < -100){
+          delObstacleIndex = i;
+        }
+      }
+      if(delObstacleIndex >= 0){
+        GameProps.obstacles.splice(delObstacleIndex, 1);
+      }
+      break;
     }
-  }
-  if(delObstacleIndex >= 0){
-    GameProps.obstacles.splice(delObstacleIndex, 1);
-  }
 }
 
 function spawnObstacle(){

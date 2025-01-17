@@ -1,5 +1,5 @@
 "use strict";
-import lib2d from "./lib2d.mjs";
+import lib2D from "./lib2d.mjs";
 /**
  * @library libSprite
  * @description A library for classes that manage sprite animations.
@@ -23,7 +23,7 @@ class TSpriteCanvas {
 
   drawSprite(aSpriteInfo, aDx = 0, aDy = 0, aIndex = 0) {
     let index = aIndex;
-    const sx = aSpriteInfo.x + (index * aSpriteInfo.width);
+    const sx = aSpriteInfo.x + index * aSpriteInfo.width;
     const sy = aSpriteInfo.y;
     const sw = aSpriteInfo.width;
     const sh = aSpriteInfo.height;
@@ -34,33 +34,38 @@ class TSpriteCanvas {
     this.#ctx.drawImage(this.#img, sx, sy, sw, sh, dx, dy, dw, dh);
   }
 
-  clearCanvas(){
+  clearCanvas() {
     this.#ctx.clearRect(0, 0, this.#cvs.width, this.#cvs.height);
   }
-}
+} // End of TSpriteCanvas class
+
+/* 
+ Utvid konstruktøren til å ta inn et punkt for destinasjon til sprite.
+*/
 
 class TSprite {
-  #spcvs; // SpriteCanvas
-  #spi; // SpriteInfo
-  #pos; // Position
-  #index; // Index
+  #spcvs;
+  #spi;
+  #pos;
+  #index;
   #speedIndex;
   constructor(aSpriteCanvas, aSpriteInfo, aPosition) {
     this.#spcvs = aSpriteCanvas;
     this.#spi = aSpriteInfo;
-    this.#pos = aPosition.clone(); // Vi trenger en kopi av posisjonen
+    this.#pos = aPosition.clone(); //Vi trenger en kopi av posisjonen
     this.#index = 0;
     this.animateSpeed = 0;
     this.#speedIndex = 0;
+    this.boundingBox = new lib2D.TRectangle(this.#pos.x, this.#pos.y, this.#spi.width, this.#spi.height);
   }
 
   draw() {
     if (this.animateSpeed > 0) {
       this.#speedIndex += this.animateSpeed / 100;
-      if(this.#speedIndex >= 1){
+      if (this.#speedIndex >= 1) {
         this.#index++;
         this.#speedIndex = 0;
-        if(this.#index >= this.#spi.count) {
+        if (this.#index >= this.#spi.count) {
           this.#index = 0;
         }
       }
@@ -71,6 +76,8 @@ class TSprite {
   translate(aDx, aDy) {
     this.#pos.x += aDx;
     this.#pos.y += aDy;
+    this.boundingBox.x = aDx;
+    this.boundingBox.y = aDy;
   }
 
   get posX() {
@@ -83,25 +90,30 @@ class TSprite {
 
   set posX(aX) {
     this.#pos.x = aX;
+    this.boundingBox.x = aX;
   }
 
   set posY(aY) {
     this.#pos.y = aY;
+    this.boundingBox.y = aY;
   }
 
   setPos(aX, aY) {
     this.#pos.x = aX;
     this.#pos.y = aY;
+    this.boundingBox.x = aX;
+    this.boundingBox.y = aY;
   }
 
   get index() {
     return this.#index;
   }
-
-  set index(aIndex) {
+  
+  set index(aIndex){
     this.#index = aIndex;
   }
-} // End of TSprite class
+
+} //End of TSprite class
 
 export default {
   /**
@@ -113,14 +125,14 @@ export default {
    * @param {function} aLoadedFinal - A callback function to call when the image is done loading.
    */
   TSpriteCanvas: TSpriteCanvas,
-  
+
   /**
    * @class TSprite
-   * @description A class that manage
+   * @description A class that manage sprite animations.
    * @param {TSpriteCanvas} aSpriteCanvas - The sprite canvas to use.
-   * @param {object} aSpriteInfo - The sprite info object.
+   * @param {object} aSpriteInfo - The sprite information.
    * @param {TPosition} aPosition - The position of the sprite.
    * @function draw - Draws the sprite on the canvas.
    */
-  TSprite: TSprite
+  TSprite: TSprite,
 };

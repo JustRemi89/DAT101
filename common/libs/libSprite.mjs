@@ -113,6 +113,10 @@ class TSprite {
     this.#index = aIndex;
   }
 
+  hasCollided(aSprite){ //Kollisjonstest med en annen sprite
+    return this.boundingBox.isInsideRect(aSprite.boundingBox);
+  }
+
 } //End of TSprite class
 
 export default {

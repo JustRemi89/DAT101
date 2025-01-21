@@ -40,6 +40,10 @@ class THero extends libSprite.TSprite {
     flap() {
         this.#velocity = -3;
     }
+
+    getCenter() {
+        return this.boundingBox.center;
+    }
 }
 
 export default THero;

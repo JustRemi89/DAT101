@@ -118,6 +118,10 @@ class TSprite {
     this.boundingBox.y = aY;
   }
 
+  getPos() {
+    return this.#pos;
+  }
+
   get index() {
     return this.#index;
   }

@@ -129,9 +129,20 @@ function animateGame(){
         GameProps.obstacles.splice(delObstacleIndex, 1);
       }
     case EGameStatus.gameOver:
+      let delBaitIndex = -1;
+      const posHero = GameProps.hero.getPos();
       for(let i = 0; i < GameProps.baits.length; i++){
         const bait = GameProps.baits[i];
         bait.update();
+        const posBait = bait.getPos();
+        const dist = posHero.distanceToPoint(posBait);
+        if(dist < 20){
+          delBaitIndex = i;
+          console.log("Bait collected");
+        }
+        if(delBaitIndex >= 0){
+          GameProps.baits.splice(delBaitIndex, 1);
+        }
       }
       break;
     }

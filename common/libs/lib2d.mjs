@@ -60,7 +60,26 @@ class TRectangle extends TPosition{
     if(this.bottom <= aRect.top) return false;
     return true;
   }
-}
+} // End of TRectangle class
+
+const RAD = Math.PI / 180;
+
+class TSineWave {
+  #amplitude;
+  #frequency;
+  #angle;
+  constructor(aAmplitude, aFrequency){
+    this.#amplitude = aAmplitude;
+    this.#frequency = aFrequency;
+    this.#angle = 0;
+  }
+
+  get value() {
+    let value = this.#amplitude * Math.sin(this.#angle * RAD);
+    this.#angle += this.#frequency;
+    return value;
+  }
+} // End of TSinWave class
 
 export default {
   /**
@@ -95,5 +114,13 @@ export default {
    * @property {number} top - The top side of the rectangle.
    * @property {number} bottom - The bottom side of the rectangle.
    */
-    TRectangle
+  TRectangle,
+  /**
+   * @class TSineWave
+   * @description A class representation of a sine wave.
+   * @param {number} aAmplitude - The amplitude of the sine wave.
+   * @param {number} aFrequency - The frequency of the sine wave.
+   * @property {number} value - The next value of the sine wave.
+   */
+  TSineWave
 }

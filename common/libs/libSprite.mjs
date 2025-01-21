@@ -122,6 +122,10 @@ class TSprite {
     return this.#pos;
   }
 
+  getCenter() {
+    return this.boundingBox.center;
+  }
+
   get index() {
     return this.#index;
   }

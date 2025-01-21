@@ -4,6 +4,7 @@ import libSound from "../../common/libs/libSound.mjs";
 import libSprite from "../../common/libs/libSprite.mjs";
 import THero from "./hero.mjs";
 import TObstacle from "./obstacle.mjs";
+import { TBait } from "./bait.mjs";
 
 
 //--------------- Objects and Variables ----------------------------------//
@@ -45,7 +46,8 @@ export const GameProps = {
   background: null,
   ground: null,
   hero: null,
-  obstacles: []
+  obstacles: [],
+  baits: []
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -72,6 +74,7 @@ function loadGame(){
   GameProps.hero = new THero(spcvs, SpriteInfoList.hero1, pos);
 
   spawnObstacle();
+  spawnBait();
 
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
@@ -80,10 +83,18 @@ function loadGame(){
 function drawGame(){
   spcvs.clearCanvas();
   GameProps.background.draw();
+  drawBait();
   drawObstacles();
   GameProps.ground.draw();
   GameProps.hero.draw();
   requestAnimationFrame(drawGame);
+}
+
+function drawBait(){
+  for(let i = 0; i < GameProps.baits.length; i++){
+    const bait = GameProps.baits[i];
+    bait.draw();
+  }
 }
 
 function drawObstacles(){
@@ -117,8 +128,22 @@ function animateGame(){
       if(delObstacleIndex >= 0){
         GameProps.obstacles.splice(delObstacleIndex, 1);
       }
+    case EGameStatus.gameOver:
+      for(let i = 0; i < GameProps.baits.length; i++){
+        const bait = GameProps.baits[i];
+        bait.update();
+      }
       break;
     }
+}
+
+function spawnBait(){
+  const pos = new lib2d.TPosition(400, 100);
+  const bait = new TBait(spcvs, SpriteInfoList.food, pos);
+  GameProps.baits.push(bait);
+  // Spawn a new bait in 5-10 seconds
+  const seconds = Math.ceil(Math.random() * 5) + 5;
+  setTimeout(spawnBait, seconds * 1000);
 }
 
 function spawnObstacle(){

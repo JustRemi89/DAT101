@@ -5,6 +5,7 @@ import libSprite from "../../common/libs/libSprite.mjs";
 import THero from "./hero.mjs";
 import TObstacle from "./obstacle.mjs";
 import { TBait } from "./bait.mjs";
+import { TMenu } from "./menu.mjs";
 
 
 //--------------- Objects and Variables ----------------------------------//
@@ -42,12 +43,13 @@ export const GameProps = {
   soundMuted: false,
   dayTime: true,
   speed: 1,
-  status: EGameStatus.playing, // For testing, normally EGameStatus.idle
+  status: EGameStatus.idle, // For testing, normally EGameStatus.idle
   background: null,
   ground: null,
   hero: null,
   obstacles: [],
-  baits: []
+  baits: [],
+  menu: null
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -78,6 +80,8 @@ function loadGame(){
 
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
+
+  GameProps.menu = new TMenu(spcvs);
 }
 
 function drawGame(){
@@ -130,20 +134,22 @@ function animateGame(){
       }
     case EGameStatus.gameOver:
       let delBaitIndex = -1;
-      const posHero = GameProps.hero.getPos();
+      const posHero = GameProps.hero.getCenter();
       for(let i = 0; i < GameProps.baits.length; i++){
         const bait = GameProps.baits[i];
         bait.update();
-        const posBait = bait.getPos();
+        const posBait = bait.getCenter();
         const dist = posHero.distanceToPoint(posBait);
-        if(dist < 20){
+        if(dist < 15){
           delBaitIndex = i;
-          console.log("Bait collected");
         }
         if(delBaitIndex >= 0){
           GameProps.baits.splice(delBaitIndex, 1);
         }
       }
+      break;
+    case EGameStatus.idle:
+      GameProps.hero.updateIdle();
       break;
     }
 }
@@ -152,17 +158,21 @@ function spawnBait(){
   const pos = new lib2d.TPosition(400, 100);
   const bait = new TBait(spcvs, SpriteInfoList.food, pos);
   GameProps.baits.push(bait);
-  // Spawn a new bait in 5-10 seconds
-  const seconds = Math.ceil(Math.random() * 5) + 5;
-  setTimeout(spawnBait, seconds * 1000);
+  // Spawn a new bait every 0.5 to 1 seconds with step of 0.1
+  if(GameProps.status === EGameStatus.playing){
+    const sec = Math.ceil(Math.random() * 5) / 10 + 0.5;
+    setTimeout(spawnBait, sec * 1000);
+  }
 }
 
 function spawnObstacle(){
   const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle);
   GameProps.obstacles.push(obstacle);
   // Spawn a new obstacle in 2-7 seconds
-  const seconds = Math.ceil(Math.random() * 5) + 2;
-  setTimeout(spawnObstacle, seconds * 1000);
+  if(GameProps.status === EGameStatus.playing){
+    const seconds = Math.ceil(Math.random() * 5) + 2;
+    setTimeout(spawnObstacle, seconds * 1000);
+  }
 }
 
 //--------------- Event Handlers -----------------------------------------//

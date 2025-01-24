@@ -60,6 +60,15 @@ class TRectangle extends TPosition{
     if(this.bottom <= aRect.top) return false;
     return true;
   }
+
+  get center() {
+    return new TPosition(this.x + this.width / 2, this.y + this.height / 2);
+  }
+
+  set center(aPoint) {
+    this.x = aPoint.x - this.width / 2;
+    this.y = aPoint.y - this.height / 2;
+  }
 } // End of TRectangle class
 
 const RAD = Math.PI / 180;

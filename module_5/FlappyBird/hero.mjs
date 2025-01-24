@@ -1,7 +1,6 @@
 "use strict";
 import libSprite from "../../common/libs/libSprite.mjs";
-import { GameProps } from "./FlappyBird.mjs";
-import { EGameStatus } from "./FlappyBird.mjs";
+import { GameProps, EGameStatus } from "./FlappyBird.mjs";
 import lib2d from "../../common/libs/lib2d.mjs";
 
 class THero extends libSprite.TSprite {

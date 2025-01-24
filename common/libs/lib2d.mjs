@@ -61,6 +61,14 @@ class TRectangle extends TPosition{
     return true;
   }
 
+  isPositionInside(aPosition){
+    if(this.left >= aPosition.x) return false;
+    if(this.right <= aPosition.x) return false;
+    if(this.top >= aPosition.y) return false;
+    if(this.bottom <= aPosition.y) return false;
+    return true;
+  }
+
   get center() {
     return new TPosition(this.x + this.width / 2, this.y + this.height / 2);
   }

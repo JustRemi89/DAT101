@@ -25,7 +25,7 @@ export const SpriteInfoList = {
   ground:       { x:  246, y: 512, width: 1152, height: 114, count:  1 },
   numberSmall:  { x:  681, y: 635, width:   14, height:  20, count: 10 },
   numberBig:    { x:  422, y: 635, width:   24, height:  36, count: 10 },
-  buttonPLay:   { x: 1183, y: 635, width:  104, height:  58, count:  1 },
+  buttonPlay:   { x: 1183, y: 635, width:  104, height:  58, count:  1 },
   gameOver:     { x:    0, y: 384, width:  226, height: 114, count:  1 },
   infoText:     { x:    0, y: 630, width:  200, height:  55, count:  2 },
   food:         { x:    0, y: 696, width:   70, height:  65, count: 34 },
@@ -43,7 +43,7 @@ export const GameProps = {
   soundMuted: false,
   dayTime: true,
   speed: 1,
-  status: EGameStatus.idle, // For testing, normally EGameStatus.idle
+  status: EGameStatus.idle,
   background: null,
   ground: null,
   hero: null,
@@ -91,6 +91,7 @@ function drawGame(){
   drawObstacles();
   GameProps.ground.draw();
   GameProps.hero.draw();
+  GameProps.menu.draw();
   requestAnimationFrame(drawGame);
 }
 
@@ -155,7 +156,7 @@ function animateGame(){
 }
 
 function spawnBait(){
-  const pos = new lib2d.TPosition(400, 100);
+  const pos = new lib2d.TPosition(600, 100);
   const bait = new TBait(spcvs, SpriteInfoList.food, pos);
   GameProps.baits.push(bait);
   // Spawn a new bait every 0.5 to 1 seconds with step of 0.1

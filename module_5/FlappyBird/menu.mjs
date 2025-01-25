@@ -27,6 +27,7 @@ export class TMenu {
         pos.x = 280;
         pos.y = 250;
         this.#spNumberBig = new libSprite.TSprite(aSpriteCanvas, SpriteInfoList.numberBig, pos);
+        this.#spNumberBig.index = 3;
         
         this.#spcvs.addEventListener("mousemove", this.#onMouseMove);
         this.#spcvs.addEventListener("click", this.#onClick);
@@ -77,6 +78,16 @@ export class TMenu {
         if(this.#activeSprite === this.#spButtonPlay) {
             GameProps.status = EGameStatus.getReady;
             this.#spcvs.style.cursor = "default";
+            setTimeout(this.#onCountDown, 1000);
         }
     }
-}
+
+    #onCountDown = () => {
+        if(this.#spNumberBig.index > 0) {
+            setTimeout(this.#onCountDown, 1000);
+            this.#spNumberBig.index--;
+        } else {
+            GameProps.status = EGameStatus.playing;
+        }
+    }
+} // End of TMenu class

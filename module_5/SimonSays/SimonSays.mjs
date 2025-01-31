@@ -3,6 +3,7 @@
 
 import lib2d from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
+import { TColorButton } from "./colorButton.mjs";
 
 // prettier-ignore
 export const SpriteInfoList = {
@@ -20,6 +21,10 @@ const spcvs = new libSprite.TSpriteCanvas(cvs);
 
 export const gameProps = {
   Background: new libSprite.TSprite(spcvs, SpriteInfoList.Background, new lib2d.TPoint(0, 0)),
+  ButtonYellow: new TColorButton(spcvs, SpriteInfoList.ButtonYellow),
+  ButtonBlue: new TColorButton(spcvs, SpriteInfoList.ButtonBlue),
+  ButtonRed: new TColorButton(spcvs, SpriteInfoList.ButtonRed),
+  ButtonGreen: new TColorButton(spcvs, SpriteInfoList.ButtonGreen),
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -34,6 +39,10 @@ function loadGame() {
 function drawGame() {
   spcvs.clearCanvas();
   gameProps.Background.draw();
+  gameProps.ButtonYellow.draw();
+  gameProps.ButtonBlue.draw();
+  gameProps.ButtonRed.draw();
+  gameProps.ButtonGreen.draw();
 
   requestAnimationFrame(drawGame);
 }

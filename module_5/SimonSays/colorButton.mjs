@@ -31,6 +31,11 @@ export class TColorButton extends libSprite.TSpriteButton {
 
     onMouseUp() {
         this.index = 0;
+        if (gameProps.activeButton === this) {
+            console.log("Riktig knapp");
+        } else {
+            console.log("Feil knapp");
+        }
     }
 
 } // class TColorButton

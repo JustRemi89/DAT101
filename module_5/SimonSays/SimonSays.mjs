@@ -21,10 +21,12 @@ const spcvs = new libSprite.TSpriteCanvas(cvs);
 
 export const gameProps = {
   Background: new libSprite.TSprite(spcvs, SpriteInfoList.Background, new lib2d.TPoint(0, 0)),
-  ButtonYellow: new TColorButton(spcvs, SpriteInfoList.ButtonYellow),
-  ButtonBlue: new TColorButton(spcvs, SpriteInfoList.ButtonBlue),
-  ButtonRed: new TColorButton(spcvs, SpriteInfoList.ButtonRed),
-  ButtonGreen: new TColorButton(spcvs, SpriteInfoList.ButtonGreen),
+  GameCenter: new lib2d.TPosition(SpriteInfoList.Background.width / 2, SpriteInfoList.Background.height / 2),
+  ColorButtons: [
+    new TColorButton(spcvs, SpriteInfoList.ButtonYellow),
+    new TColorButton(spcvs, SpriteInfoList.ButtonBlue),
+    new TColorButton(spcvs, SpriteInfoList.ButtonRed),
+    new TColorButton(spcvs, SpriteInfoList.ButtonGreen)],
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -39,10 +41,9 @@ function loadGame() {
 function drawGame() {
   spcvs.clearCanvas();
   gameProps.Background.draw();
-  gameProps.ButtonYellow.draw();
-  gameProps.ButtonBlue.draw();
-  gameProps.ButtonRed.draw();
-  gameProps.ButtonGreen.draw();
+  for(let i = 0; i < gameProps.ColorButtons.length; i++) {
+    gameProps.ColorButtons[i].draw();
+  }
 
   requestAnimationFrame(drawGame);
 }

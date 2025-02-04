@@ -46,6 +46,7 @@ export const gameProps = {
     SpriteInfoList.ButtonStartEnd.dst,
     lib2d.TCircle
   ),
+  GameSpeed: 800,
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -92,7 +93,7 @@ function setDisabledButtons(aDisabled) {
 
 function setMouseDown() {
   gameProps.activeButton.onMouseDown();
-  setTimeout(setMouseUp, 1000);
+  setTimeout(setMouseUp, gameProps.GameSpeed);
 }
 
 function setMouseUp() {
@@ -107,7 +108,7 @@ function setMouseUp() {
   }
   gameProps.activeButton = gameProps.sequence[gameProps.seqIndex];
   if(!done) {
-    setTimeout(setMouseDown, 1000);
+    setTimeout(setMouseDown, gameProps.GameSpeed);
   } else {
     gameProps.Status = EGameStatusType.Player; // Nå venter vi på at spilleren spiller
   }
@@ -119,8 +120,13 @@ export function spawnSequence() {
   gameProps.sequence.push(button);
   gameProps.seqIndex = 0;
   gameProps.Status = EGameStatusType.Computer;
+  if(gameProps.GameSpeed <= 200) {
+    gameProps.GameSpeed = 200;
+  } else {
+    gameProps.GameSpeed -= 50;
+  }
   gameProps.activeButton = gameProps.sequence[0];
-  setTimeout(setMouseDown, 1000);
+  setTimeout(setMouseDown, gameProps.GameSpeed);
 }
 
 //--------------- Event Handlers -----------------------------------------//

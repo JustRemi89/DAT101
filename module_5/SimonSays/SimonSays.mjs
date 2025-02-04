@@ -2,6 +2,7 @@
 //--------------- Objects and Variables ----------------------------------//
 
 import lib2d from "../../common/libs/lib2d_v2.mjs";
+import libSprite_v2 from "../../common/libs/libSprite_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { TColorButton } from "./colorButton.mjs";
 
@@ -19,16 +20,32 @@ export const SpriteInfoList = {
 const cvs = document.getElementById("cvs");
 const spcvs = new libSprite.TSpriteCanvas(cvs);
 
+export const EGameStatusType = {
+  Idle: 0,
+  Computer: 1,
+  Player: 2,
+  GameOver: 3
+};
+
 export const gameProps = {
   Background: new libSprite.TSprite(spcvs, SpriteInfoList.Background, new lib2d.TPoint(0, 0)),
   GameCenter: new lib2d.TPosition(SpriteInfoList.Background.width / 2, SpriteInfoList.Background.height / 2),
+  Status: EGameStatusType.Computer,
+  //prettier-ignore
   ColorButtons: [
     new TColorButton(spcvs, SpriteInfoList.ButtonYellow),
     new TColorButton(spcvs, SpriteInfoList.ButtonBlue),
     new TColorButton(spcvs, SpriteInfoList.ButtonRed),
     new TColorButton(spcvs, SpriteInfoList.ButtonGreen)],
   sequence: [],
+  seqIndex: 0, // Index for å holde styr på hvilken knapp i sekvensen vi er på
   activeButton: null,
+  buttonStartEnd: new libSprite.TSpriteButton(
+    spcvs,
+    SpriteInfoList.ButtonStartEnd,
+    SpriteInfoList.ButtonStartEnd.dst,
+    lib2d.TCircle
+  ),
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -36,8 +53,14 @@ export const gameProps = {
 function loadGame() {
   cvs.width = gameProps.Background.width;
   cvs.height = gameProps.Background.height;
-  spawnSequence();
+  gameProps.buttonStartEnd.onClick = startGame();
+  setDisabledButtons(true);
   drawGame();
+}
+
+function startGame() {
+  gameProps.sequence.push(gameProps.ColorButtons[0]); // Simulerer at vi har en sekvens
+  spawnSequence();
 }
 
 function drawGame() {
@@ -46,8 +69,14 @@ function drawGame() {
   for(let i = 0; i < gameProps.ColorButtons.length; i++) {
     gameProps.ColorButtons[i].draw();
   }
-
+  gameProps.buttonStartEnd.draw();
   requestAnimationFrame(drawGame);
+}
+
+function setDisabledButtons(aDisabled) {
+  for (let i = 0; i < gameProps.ColorButtons.length; i++) {
+    gameProps.ColorButtons[i].disable = aDisabled;
+  }
 }
 
 function setMouseDown() {
@@ -56,13 +85,29 @@ function setMouseDown() {
 }
 
 function setMouseUp() {
-  gameProps.activeButton.onMouseUp();
+  let done = false;
+  if (gameProps.seqIndex < gameProps.sequence.length - 1) {
+    gameProps.activeButton.onMouseUp();
+    gameProps.seqIndex++;
+  } else {
+    gameProps.activeButton.onMouseUp();
+    gameProps.seqIndex = 0;
+    done = true;
+  }
+  gameProps.activeButton = gameProps.sequence[gameProps.seqIndex];
+  if(!done) {
+    setTimeout(setMouseDown, 1000);
+  } else {
+    gameProps.Status = EGameStatusType.Player; // Nå venter vi på at spilleren spiller
+  }
 }
 
 function spawnSequence() {
   const index = Math.floor(Math.random() * gameProps.ColorButtons.length);
   const button = gameProps.ColorButtons[index];
   gameProps.sequence.push(button);
+  gameProps.seqIndex = 0;
+  gameProps.Status = EGameStatusType.Computer;
   gameProps.activeButton = gameProps.sequence[0];
   setTimeout(setMouseDown, 1000);
 }

@@ -67,6 +67,8 @@ function startGame() {
   gameProps.ColorButtons[1].sound = new libSound.TSoundWave(4, "D", "sine");
   gameProps.ColorButtons[2].sound = new libSound.TSoundWave(4, "E", "sine");
   gameProps.ColorButtons[3].sound = new libSound.TSoundWave(4, "F", "sine");
+  gameProps.sequence = [];
+  gameProps.GameSpeed = 800;
   spawnSequence();
 }
 
@@ -111,6 +113,7 @@ function setMouseUp() {
     setTimeout(setMouseDown, gameProps.GameSpeed);
   } else {
     gameProps.Status = EGameStatusType.Player; // Nå venter vi på at spilleren spiller
+    setDisabledButtons(false);
   }
 }
 
@@ -120,13 +123,12 @@ export function spawnSequence() {
   gameProps.sequence.push(button);
   gameProps.seqIndex = 0;
   gameProps.Status = EGameStatusType.Computer;
-  if(gameProps.GameSpeed <= 200) {
-    gameProps.GameSpeed = 200;
-  } else {
+  gameProps.activeButton = gameProps.sequence[0];
+  setDisabledButtons(true);
+  setTimeout(setMouseDown, gameProps.GameSpeed);
+  if(gameProps.GameSpeed > 100) {
     gameProps.GameSpeed -= 50;
   }
-  gameProps.activeButton = gameProps.sequence[0];
-  setTimeout(setMouseDown, gameProps.GameSpeed);
 }
 
 //--------------- Event Handlers -----------------------------------------//

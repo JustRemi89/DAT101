@@ -1,7 +1,7 @@
 "use strict";
 import lib2d from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
-import { gameProps, EGameStatusType } from "./SimonSays.mjs";
+import { gameProps, EGameStatusType, spawnSequence } from "./SimonSays.mjs";
 
 export class TColorButton extends libSprite.TSpriteButton {
     constructor(aSpriteCanvas, aSpriteInfo) {
@@ -39,8 +39,17 @@ export class TColorButton extends libSprite.TSpriteButton {
         }
         if (gameProps.activeButton === this) {
             console.log("Riktig knapp");
+            if(gameProps.seqIndex < gameProps.sequence.length - 1) {
+                gameProps.seqIndex++;
+                gameProps.activeButton = gameProps.sequence[gameProps.seqIndex];
+            } else {
+                spawnSequence();
+            }
         } else {
             console.log("Feil knapp");
+            gameProps.Status = EGameStatusType.GameOver;
+            gameProps.buttonStartEnd.index = 1;
+            gameProps.buttonStartEnd.visible = true;
         }
     }
 

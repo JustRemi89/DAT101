@@ -47,6 +47,14 @@ export const gameProps = {
     lib2d.TCircle
   ),
   GameSpeed: 800,
+  spnRound: new libSprite.TSpriteNumber(spcvs,
+    SpriteInfoList.number,
+    SpriteInfoList.number.dst
+  ),
+  spnGameOver: new libSprite.TSpriteNumber(spcvs,
+    SpriteInfoList.number,
+    new lib2d.TPosition(365, 405)
+  ),
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -69,6 +77,7 @@ function startGame() {
   gameProps.ColorButtons[3].sound = new libSound.TSoundWave(4, "F", "sine");
   gameProps.sequence = [];
   gameProps.GameSpeed = 800;
+  gameProps.spnRound.value = 0; //Vi starter alltid på runde 0
   spawnSequence();
 }
 
@@ -78,7 +87,9 @@ function drawGame() {
   for(let i = 0; i < gameProps.ColorButtons.length; i++) {
     gameProps.ColorButtons[i].draw();
   }
+  gameProps.spnRound.draw();
   gameProps.buttonStartEnd.draw();
+  gameProps.spnGameOver.draw();
   requestAnimationFrame(drawGame);
 }
 

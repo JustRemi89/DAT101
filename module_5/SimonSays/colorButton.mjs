@@ -31,7 +31,15 @@ export class TColorButton extends libSprite.TSpriteButton {
         this.sound.play();
     }
 
+    onLeave(aEvent) {
+        if(aEvent.buttons !== 0) {
+            this.index = 0;
+            this.sound.stop();
+        }
+    }
+
     onMouseUp() {
+        if(this.index !== 1) return; // Hvis knappen ikke er trykket ned, så gjør ingenting
         this.index = 0;
         this.sound.stop();
         if (gameProps.Status !== EGameStatusType.Player) {
@@ -43,6 +51,8 @@ export class TColorButton extends libSprite.TSpriteButton {
                 gameProps.seqIndex++;
                 gameProps.activeButton = gameProps.sequence[gameProps.seqIndex];
             } else {
+                gameProps.spnRound.value++;
+                gameProps.spnGameOver.value = gameProps.spnRound.value;
                 spawnSequence();
             }
         } else {
@@ -50,6 +60,7 @@ export class TColorButton extends libSprite.TSpriteButton {
             gameProps.Status = EGameStatusType.GameOver;
             gameProps.buttonStartEnd.index = 1;
             gameProps.buttonStartEnd.visible = true;
+            gameProps.spnGameOver.draw();
         }
     }
 

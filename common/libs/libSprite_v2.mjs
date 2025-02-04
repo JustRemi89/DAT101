@@ -58,7 +58,7 @@ class TSpriteCanvas {
       }
     } else if (newButton === null && this.activeSprite !== null) {
       if (this.activeSprite.onLeave) {
-        this.activeSprite.onLeave();
+        this.activeSprite.onLeave(aEvent);
       }
       this.activeSprite = null;
     }

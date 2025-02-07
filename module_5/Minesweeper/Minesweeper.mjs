@@ -1,6 +1,7 @@
 "use strict";
 import lib2d from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
+import { TTile } from "./Tile.mjs";
 import { TGameBoard } from "./GameBoard.mjs";
 
 //-----------------------------------------------------------------------------------------
@@ -38,6 +39,7 @@ const selectDifficulty = document.getElementById("selectDifficulty");
 
 export const gameProps = {
   gameBoard: null,
+  tile: null,
 }
 //-----------------------------------------------------------------------------------------
 //----------- functions -------------------------------------------------------------------
@@ -53,12 +55,15 @@ export function newGame() {
   cvs.height = gameLevel.Tiles.Row * SpriteInfoList.ButtonTile.height + SpriteInfoList.Board.TopMiddle.height + SpriteInfoList.Board.BottomMiddle.height;
   spcvs.updateBoundsRect();
   gameProps.gameBoard = new TGameBoard(spcvs, SpriteInfoList.Board, new lib2d.TPoint(0, 0));
+  const pos = new lib2d.TPoint(21, 133);
+  gameProps.tile = new TTile(spcvs, SpriteInfoList.ButtonTile, pos);
 }
 
 
 function drawGame() {
   spcvs.clearCanvas();
   gameProps.gameBoard.draw();
+  gameProps.tile.draw();
   requestAnimationFrame(drawGame);
 }
 

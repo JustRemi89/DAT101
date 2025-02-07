@@ -7,65 +7,64 @@
 class TPoint {
   x = 0;
   y = 0;
-  constructor(aX, aY){
+  constructor(aX, aY) {
     this.x = aX;
     this.y = aY;
   }
 } // End of TPoint class
 
-class TPosition extends TPoint{
-  constructor(aX, aY){
+class TPosition extends TPoint {
+  constructor(aX, aY) {
     super(aX, aY);
   }
 
-  clone(){
+  clone() {
     return new TPosition(this.x, this.y);
   }
 
-  distanceToPoint(aPoint){
+  distanceToPoint(aPoint) {
     const dx = this.x - aPoint.x;
     const dy = this.y - aPoint.y;
     return Math.hypot(dx, dy);
   }
+} // End of TPosition class
 
-}// End of TPosition class
-
-class TRectangle extends TPosition{
-  constructor(aX, aY, aWidth, aHeight){
+class TRectangle extends TPosition {
+  constructor(aX, aY, aWidth, aHeight) {
     super(aX, aY);
     this.width = aWidth;
     this.height = aHeight;
   }
 
-  get left(){
+  get left() {
     return this.x;
   }
 
-  get right(){
+  get right() {
     return this.x + this.width;
   }
 
-  get top(){
+  get top() {
     return this.y;
   }
 
-  get bottom(){
+  get bottom() {
     return this.y + this.height;
   }
 
-  isInsideRect(aRect){
-    if(this.left >= aRect.right) return false;
-    if(this.right <= aRect.left) return false;
-    if(this.top >= aRect.bottom) return false;
-    if(this.bottom <= aRect.top) return false;
+  isInsideRect(aRect) {
+    if (this.left >= aRect.right) return false;
+    if (this.right <= aRect.left) return false;
+    if (this.top >= aRect.bottom) return false;
+    if (this.bottom <= aRect.top) return false;
     return true;
   }
 
-  isPositionInside(aPosition){
-    if(this.left >= aPosition.x) return false;
-    if(this.right <= aPosition.x) return false;
-    if(this.top >= aPosition.y) return false;
-    if(this.bottom <= aPosition.y) return false;
+  isPositionInside(aPosition) {
+    if (this.left >= aPosition.x) return false;
+    if (this.right <= aPosition.x) return false;
+    if (this.top >= aPosition.y) return false;
+    if (this.bottom <= aPosition.y) return false;
     return true;
   }
 
@@ -85,7 +84,7 @@ class TSineWave {
   #amplitude;
   #frequency;
   #angle;
-  constructor(aAmplitude, aFrequency){
+  constructor(aAmplitude, aFrequency) {
     this.#amplitude = aAmplitude;
     this.#frequency = aFrequency;
     this.#angle = 0;
@@ -96,7 +95,7 @@ class TSineWave {
     this.#angle += this.#frequency;
     return value;
   }
-} // End of TSinWave class
+} // end of TSineWave class
 
 export default {
   /**
@@ -116,14 +115,15 @@ export default {
    * @method distanceToPoint - A method to calculate the distance to another point.
    */
   TPosition,
+
   /**
    * @class TRectangle
-   * @description A rectangle class for manipulation of rectangle in 2D.
+   * @extends TPosition
+   * @description A class representation for a rectangle in 2D.
    * @param {number} aX - The x-coordinate.
    * @param {number} aY - The y-coordinate.
    * @param {number} aWidth - The width of the rectangle.
    * @param {number} aHeight - The height of the rectangle.
-   * @extends TPosition
    * @property {number} width - The width of the rectangle.
    * @property {number} height - The height of the rectangle.
    * @property {number} left - The left side of the rectangle.
@@ -134,10 +134,10 @@ export default {
   TRectangle,
   /**
    * @class TSineWave
-   * @description A class representation of a sine wave.
-   * @param {number} aAmplitude - The amplitude of the sine wave.
-   * @param {number} aFrequency - The frequency of the sine wave.
-   * @property {number} value - The next value of the sine wave.
+   * @description A class representation for a sine wave.
+   * @param {number} aAmplitude - The amplitude of the wave.
+   * @param {number} aFrequency - The frequency of the wave.
+   * @property {number} value - The next value of the wave.
    */
-  TSineWave
-}
+  TSineWave,
+};

@@ -34,8 +34,8 @@ class TSpriteCanvas {
     const dy = aDy;
     const dw = sw;
     const dh = sh;
-    if(aRot !== 0) {
-      // Hvis vi har rotasjon så må vi flytte midten av destinasjonen til 0,0
+    if(aRot !== 0){
+      //Hvis vi har rotasjon må vi flytte mitten av destinasjonen til 0,0
       const cx = dx + dw / 2;
       const cy = dy + dh / 2;
       const rad = aRot * Math.PI / 180;
@@ -44,13 +44,13 @@ class TSpriteCanvas {
       this.#ctx.drawImage(this.#img, sx, sy, sw, sh, -dw / 2, -dh / 2, dw, dh);
       this.#ctx.rotate(-rad);
       this.#ctx.translate(-cx, -cy);
-    } else {
+    }else{
       this.#ctx.drawImage(this.#img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
   } // End of drawSprite
 
-  drawText(aText, aPos) {
-    this.#ctx.font = "22px Arial";
+  drawText(aText, aPos){
+    this.#ctx.font = "25px Arial";
     this.#ctx.fillStyle = "#333333";
     this.#ctx.textAlign = "right";
     this.#ctx.fillText(aText, aPos.x, aPos.y);
@@ -60,19 +60,20 @@ class TSpriteCanvas {
     this.#ctx.clearRect(0, 0, this.#cvs.width, this.#cvs.height);
   }
 
-  addEventListener(aType, aListener) {
+  addEventListener(aType, aListener){
     this.#cvs.addEventListener(aType, aListener);
   }
 
-  getMousePos(aEvent) {
+  getMousePos(aEvent){
     this.mousePos.x = aEvent.clientX - this.#boundingRect.left;
     this.mousePos.y = aEvent.clientY - this.#boundingRect.top;
     return this.mousePos;
   }
 
-  get style() {
+  get style(){
     return this.#cvs.style;
   }
+
 } // End of TSpriteCanvas class
 
 /* 
@@ -125,11 +126,11 @@ class TSprite {
     return this.#pos.y;
   }
 
-  get left() {
+  get left(){
     return this.#pos.x;
   }
 
-  get right() {
+  get right(){
     return this.#pos.x + this.#spi.width;
   }
 
@@ -150,12 +151,8 @@ class TSprite {
     this.boundingBox.y = aY;
   }
 
-  getPos() {
+  getPos(){
     return this.#pos;
-  }
-
-  getCenter() {
-    return this.boundingBox.center;
   }
 
   get index() {
@@ -166,8 +163,12 @@ class TSprite {
     this.#index = aIndex;
   }
 
-  hasCollided(aSprite){ //Kollisjonstest med en annen sprite
+  hasCollided(aSprite){
     return this.boundingBox.isInsideRect(aSprite.boundingBox);
+  }
+
+  getCenter(){
+    return this.boundingBox.center;
   }
 
 } //End of TSprite class

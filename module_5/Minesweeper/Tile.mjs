@@ -3,6 +3,17 @@ import libSprite from "../../common/libs/libSprite_v2.mjs";
 import lib2d from "../../common/libs/lib2d_v2.mjs";
 import { gameProps, gameLevel } from "./Minesweeper.mjs";
 
+const MineInfoColors = [
+    "blue",
+    "Green",
+    "Red",
+    "DarkBlue",
+    "Brown",
+    "Cyan",
+    "Black",
+    "Grey",
+];
+
 class TCell {
     constructor(aRow, aColumn) {
         this.row = aRow;
@@ -34,17 +45,22 @@ class TCell {
         for(let rowIndex = rows.from; rowIndex <= rows.to; rowIndex++) {
             const row = gameProps.tiles[rowIndex];
             for(let colIndex = cols.from; colIndex <= cols.to; colIndex++) {
-                if(this.row !== rowIndex && this.col !== colIndex) {
+                const isThisTile = (this.row === rowIndex && this.col === colIndex);
+                if(!isThisTile) {
                     const tile = row[colIndex];
-                    neighbors.push({tile});
+                    neighbors.push(tile);
                 }
             }
         }
-    }
-}
+        return neighbors;
+    } // End of neighbors getter
+} // End of class TCell
 
 export class TTile extends libSprite.TSpriteButton {
     #isMine;
+    #cell;
+    #mineInfo;
+
     constructor(aSpriteCanvas, aSpriteInfo, aRow, aColumn) {
         const cell = new TCell(aRow, aColumn);
         const pos = new lib2d.TPoint(21,133);
@@ -52,6 +68,8 @@ export class TTile extends libSprite.TSpriteButton {
         pos.y += aSpriteInfo.height * cell.row;
         super(aSpriteCanvas, aSpriteInfo, pos);
         this.#isMine = false;
+        this.#cell = cell;
+        this.#mineInfo = 0;
     }
 
     onMouseDown(aEvent) {
@@ -59,7 +77,21 @@ export class TTile extends libSprite.TSpriteButton {
     }
 
     onMouseUp(aEvent) {
-        this.index = 2;
+        if(this.#isMine) {
+            this.index = 4;
+            // Game over :(
+        } else {
+            this.index = 2;
+            if(this.#mineInfo === 0) {
+                const neighbors = this.#cell.neighbors;
+                for(let i = 0; i < neighbors.length; i++) {
+                    const neighbor = neighbors[i];
+                    if(!neighbor.isOpen) {
+                        neighbor.OpenUp();
+                    }
+                }
+            }
+        }
         this.disable = true;
     }
 
@@ -75,9 +107,60 @@ export class TTile extends libSprite.TSpriteButton {
 
     set isMine(aValue) {
         this.#isMine = aValue;
-        this.index = 4;
+        if(aValue) {
+            const neighbors = this.#cell.neighbors;
+            for(let i = 0; i < neighbors.length; i++) {
+                const neighbor = neighbors[i];
+                neighbor.incMineInfo();
+            }
+        this.#mineInfo = 0;
+        }
+    } // End of isMine setter
+
+    incMineInfo() {
+        if(this.#isMine) {
+            this.#mineInfo = 0;
+        } else {
+            this.#mineInfo++;
+        }
     }
-}
+
+    onCustomDraw(aCTX) {
+        if(this.isOpen) {
+            if(this.#mineInfo > 0) {
+                const posX = this.x + 19;
+                const posY = this.y + 33;
+                aCTX.font = "20px Arial";
+                aCTX.fillStyle = MineInfoColors[this.#mineInfo - 1];
+                aCTX.fillText(this.#mineInfo.toString(), posX, posY);
+            }
+        }
+    }
+
+    get isOpen() {
+        if(this.index !== 0 && this.index !== 1) {
+            return true;
+        }
+        return false;
+    }
+
+    OpenUp() {
+        if(this.isOpen) {
+            return;
+        }
+        this.index = 2;
+        if(this.#mineInfo === 0) {
+            const neighbors = this.#cell.neighbors;
+            for(let i = 0; i < neighbors.length; i++) {
+                const neighbor = neighbors[i];
+                if(!neighbor.isOpen) {
+                    neighbor.OpenUp();
+                }
+            }
+        }
+    }
+
+} // End of class TTile
 
 export function forEachTile(aCallBack) {
     if(!aCallBack) {

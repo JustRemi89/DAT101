@@ -1,7 +1,7 @@
 "use strict";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 import lib2d from "../../common/libs/lib2d_v2.mjs";
-import { gameProps } from "./Minesweeper.mjs";  
+import { gameProps } from "./Minesweeper.mjs";
 
 export class TGameBoard {
   #sps = [];

@@ -3,6 +3,7 @@ import lib2d from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { TTile, forEachTile } from "./Tile.mjs";
 import { TGameBoard } from "./GameBoard.mjs";
+import { TScoreBoard } from "./ScoreBoard.mjs";
 
 //-----------------------------------------------------------------------------------------
 //----------- variables and object --------------------------------------------------------
@@ -24,7 +25,7 @@ export const SpriteInfoList = {
 };
 
 const Difficulty = {
-  Level_1: { Tiles: { Row: 10, Col: 10 }, Mines: 4, caption: "Level 1" },
+  Level_1: { Tiles: { Row: 10, Col: 10 }, Mines: 10, caption: "Level 1" },
   Level_2: { Tiles: { Row: 15, Col: 15 }, Mines: 20, caption: "Level 2" },
   Level_3: { Tiles: { Row: 20, Col: 30 }, Mines: 99, caption: "Level 3" },
 };
@@ -39,6 +40,7 @@ const selectDifficulty = document.getElementById("selectDifficulty");
 
 export const gameProps = {
   gameBoard: null,
+  scoreBoard: null,
   tiles: [],
 }
 //-----------------------------------------------------------------------------------------
@@ -74,6 +76,7 @@ export function newGame() {
       ++mineCounter;
     }
   } while (mineCounter <= gameLevel.Mines);
+  gameProps.scoreBoard = new TScoreBoard(spcvs, SpriteInfoList.Numbers, new lib2d.TPoint(0, 0));
 }
 
 
@@ -81,6 +84,7 @@ function drawGame() {
   spcvs.clearCanvas();
   gameProps.gameBoard.draw();
   forEachTile(drawTile);
+  gameProps.scoreBoard.draw();
   requestAnimationFrame(drawGame);
 }
 

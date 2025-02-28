@@ -5,6 +5,8 @@
 //--------------------------------------------------------------------------------------------------------------------
 import lib2D from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
+import { TColorPicker } from "./ColorPicker.mjs";
+import MastermindBoard from "./MastermindBoard.mjs";
 
 //--------------------------------------------------------------------------------------------------------------------
 //------ Variables, Constants and Objects
@@ -18,7 +20,7 @@ export const SpriteInfoList = {
   ButtonCheat:        { x:   0, y: 139, width:  75, height:  49, count: 2 },
   PanelHideAnswer:    { x:   0, y:  90, width: 186, height:  49, count: 1 },
   ColorPicker:        { x:   0, y: 200, width:  34, height:  34, count: 8 },
-  ColorHint:          { x:   0, y: 250, width:  19, height:  18, count: 2 },
+  ColorHint:          { x:   0, y: 250, width:  19, height:  18, count: 3 },
 };
 
 const cvs = document.getElementById("cvs");
@@ -27,6 +29,18 @@ const spcvs = new libSprite.TSpriteCanvas(cvs);
 //Add all you game objects here
 export const GameProps = {
   Board: null,
+  ButtonNewGame: null,
+  ButtonCheckAnswer: null,
+  ButtonCheat: null,
+  PanelHideAnswer: null,
+  ColorPickers: [],
+  SnapTo: {
+    positions: MastermindBoard.ColorAnswer.Row1,
+    distance: 20,
+  },
+  ColorHint: null,
+  computerAnswer: [],
+  roundIndicator: null,
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -34,14 +48,49 @@ export const GameProps = {
 //--------------------------------------------------------------------------------------------------------------------
 
 function newGame() {
-  GameProps.Board = new libSprite.TBoard(spcvs, SpriteInfoList.Board, new lib2d.TPoint(0, 0));
+  generateComputerAnswer();
 }
 
 function drawGame(){
   spcvs.clearCanvas();
   //Draw all game objects here, remember to think about the draw order (layers in PhotoShop for example!)
   GameProps.Board.draw();
+  GameProps.NewGame.draw();
+  GameProps.CheckAnswer.draw();
+  GameProps.ButtonCheat.draw();
+  for (let i = 0; i < GameProps.computerAnswer.length; i++) {
+    const sprite = GameProps.computerAnswer[i];
+    sprite.draw();
+  }
+  //GameProps.PanelHideAnswer.draw();
+  GameProps.roundIndicator.draw();
+  drawColorPicker();
   requestAnimationFrame(drawGame);
+}
+
+function generateComputerAnswer() {
+  for(let i = 0; i < 4; i++) {
+    const colorIndex = Math.floor(Math.random() * SpriteInfoList.ColorPicker.count);
+    const pos = MastermindBoard.ComputerAnswer[i];
+    const sprite = new libSprite.TSprite(spcvs, SpriteInfoList.ColorPicker, pos);
+    sprite.index = colorIndex;
+    GameProps.computerAnswer.push(sprite);
+  }
+}
+
+function drawColorPicker() {
+  for (let i = 0; i < GameProps.ColorPickers.length; i++) {
+    const ColorPicker = GameProps.ColorPickers[i];
+    ColorPicker.draw();
+  }
+}
+
+function moveRoundIndicator() {
+  const pos = GameProps.SnapTo.positions[0];
+  pos.x -= 84;
+  pos.y += 7;
+  GameProps.roundIndicator.x = pos.x;
+  GameProps.roundIndicator.y = pos.y;
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -53,6 +102,32 @@ function loadGame() {
   //Set canvas with and height to match the sprite sheet
   cvs.width = SpriteInfoList.Board.width;
   cvs.height = SpriteInfoList.Board.height;
+  spcvs.updateBoundsRect();
+
+  GameProps.Board = new libSprite.TSprite(spcvs, SpriteInfoList.Board, new lib2D.TPoint(0, 0));
+  let pos = new lib2D.TPoint(0, 0);
+  pos.x = cvs.width - SpriteInfoList.ButtonNewGame.width;
+  pos.y = 0;
+  GameProps.NewGame = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonNewGame, pos);
+  pos.y = pos.y + SpriteInfoList.ButtonNewGame.height;
+  GameProps.CheckAnswer = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonCheckAnswer, pos);
+  pos.x = 0;
+  pos.y = SpriteInfoList.ButtonNewGame.height;
+  GameProps.ButtonCheat = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonCheat, pos);
+  pos.x = SpriteInfoList.ButtonCheat.width + 10;
+  GameProps.PanelHideAnswer = new libSprite.TSprite(spcvs, SpriteInfoList.PanelHideAnswer, pos);
+
+  const ColorKeys = Object.keys(MastermindBoard.ColorPicker);
+  for (let i = 0; i < ColorKeys.length; i++) {
+    const colorName = ColorKeys[i]; // Color name
+    const colorPicker = new TColorPicker(spcvs, SpriteInfoList.ColorPicker, colorName, i);
+    GameProps.ColorPickers.push(colorPicker);
+  }
+
+  pos = GameProps.SnapTo.positions[0];
+  GameProps.roundIndicator = new libSprite.TSprite(spcvs, SpriteInfoList.ColorHint, pos);
+  GameProps.roundIndicator.index = 2;
+  moveRoundIndicator();
 
   newGame();
   requestAnimationFrame(drawGame); // Start the animation loop

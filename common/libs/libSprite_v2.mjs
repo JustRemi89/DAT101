@@ -42,8 +42,11 @@ class TSpriteCanvas {
     if (this.activeSprite && this.activeSprite.isDragging) {
       this.activeSprite.onDrag(pos);
       return;
-    }
+    } else if(this.activeSprite && this.activeSprite.disabled) {
+      this.#cvs.style.cursor = "default";
 
+    }
+    
     let newSprite = null;
     this.#sprites.every((aSprite) => {
       //Continue to next button if this button is not visible or disabled
@@ -435,12 +438,14 @@ class TSpriteDraggable extends TSpriteButton {
   #offset;
   #startDragPos;
   #canDrop;
+  #dropPos;
   constructor(aSpriteCanvas, aSpriteInfo, aPosition, aShapeClass) {
     super(aSpriteCanvas, aSpriteInfo, aPosition, aShapeClass);
     this.#offset = null; //Not dragging
     this.canDrag = true;
     this.#canDrop = true;
     this.snapTo = null;
+    this.#dropPos = null;
   }
 
   get isDragging() {
@@ -471,6 +476,14 @@ class TSpriteDraggable extends TSpriteButton {
       //Reset position to start drag position
       this.x = this.#startDragPos.x;
       this.y = this.#startDragPos.y;
+      if(this.onCancelDrop) {
+        this.onCancelDrop();
+        this.spcvs.style.cursor = "default";
+      }
+    } else {
+      if(this.onDrop) {
+        this.onDrop(this.#dropPos);
+      }
     }
     this.#offset = null;
     this.#startDragPos = null;
@@ -493,6 +506,7 @@ class TSpriteDraggable extends TSpriteButton {
           this.x = aPosition.x;
           this.y = aPosition.y;
           this.#canDrop = true;
+          this.#dropPos = aPosition;
           return false; //Break the loop
         }
         return true; //Continue the loop

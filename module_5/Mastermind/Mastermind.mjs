@@ -39,6 +39,7 @@ export const GameProps = {
   ColorHint: null,
   computerAnswer: [],
   roundIndicator: null,
+  playerAnswers: [null, null, null, null],
 }
 
 //--------------------------------------------------------------------------------------------------------------------

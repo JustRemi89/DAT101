@@ -30,7 +30,24 @@ export class TMenu {
 
     onCheckAnswerClick = () => {
         // Denne sjekker om vi har valgt rett farge
-        
+        const answerObject = { color: 0, pos: -1 };
+        const computerAnswerList = [];
+        for (let i = 1; i <= 4; i++) {
+            const obj = Object.create(answerObject);
+            const computerAnswer = GameProps.computerAnswer;
+            obj.color = computerAnswer.index;
+            obj.pos = i;
+            computerAnswerList.push(obj);
+        }
+        // Lage liste over spillerens svar
+        const playerAnswerList = [];
+        /*for (let i = 1; i <= 4; i++) {
+            const obj = Object.create(answerObject);
+            const playerAnswer = GameProps.ColorPickers[i];
+            obj.color = playerAnswer.index;
+            obj.pos = i;
+            playerAnswerList.push(obj);
+        }*/
     }
 
     /*buttonMouseDown = (aEvent) => {

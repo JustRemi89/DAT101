@@ -11,6 +11,7 @@ export class TColorPicker extends libSprite.TSpriteDraggable {
     #spi;
     #color;
     #snapPos;
+    #snapIndex;
     #hasMoved;
     constructor(spcvs, spriteInfo, color, index) {
         super(spcvs, spriteInfo, Positions[color]);
@@ -20,6 +21,7 @@ export class TColorPicker extends libSprite.TSpriteDraggable {
         this.#spi = spriteInfo;
         this.#color = color;
         this.#snapPos = null;
+        this.#snapIndex = -1;
         this.#hasMoved = false;
     }
 
@@ -38,9 +40,11 @@ export class TColorPicker extends libSprite.TSpriteDraggable {
 
     onDrop(aDropPosition) {
         GameProps.ColorPickers.push(this.clone());
-        const index = GameProps.SnapTo.positions.indexOf(aDropPosition);
-        const removedItems = GameProps.SnapTo.positions.splice(index, 1);
-        this.#snapPos = removedItems[0];
+        this.#snapIndex = GameProps.SnapTo.positions.indexOf(aDropPosition);
+        this.#snapPos = new lib2D.TPoint();
+        this.#snapPos.x = GameProps.SnapTo.positions[this.#snapIndex].x;
+        this.#snapPos.y = GameProps.SnapTo.positions[this.#snapIndex].y;
+        GameProps.SnapTo.positions[this.#snapIndex] = null;
         this.#hasMoved = true;
     }
 

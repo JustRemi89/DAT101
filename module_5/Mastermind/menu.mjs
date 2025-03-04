@@ -21,4 +21,14 @@ export class TMenu {
         this.#buttonCheat.draw();
         this.#panelHint.draw();
     }
+
+    onHintClick = () => {
+        this.#panelHint.visible = !this.#panelHint.visible;
+    }
+
+    buttonMouseDown = (aEvent) => {
+        this.#newGame.onMouseDown(aEvent);
+        this.#checkAnswer.onMouseDown(aEvent);
+        this.#buttonCheat.onMouseDown(aEvent);
+    }
 }

@@ -13,6 +13,8 @@ export class TMenu {
         this.#checkAnswer = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonCheckAnswer, MastermindBoard.ButtonCheckAnswer);
         this.#buttonCheat = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonCheat, MastermindBoard.ButtonCheat);
         this.#panelHint = new libSprite.TSprite(spcvs, SpriteInfoList.PanelHideAnswer, MastermindBoard.PanelHideAnswer);
+
+        this.#buttonCheat.onClick = this.onHintClick;
     }
 
     draw() {
@@ -26,9 +28,14 @@ export class TMenu {
         this.#panelHint.visible = !this.#panelHint.visible;
     }
 
-    buttonMouseDown = (aEvent) => {
+    onCheckAnswerClick = () => {
+        // Denne sjekker om vi har valgt rett farge
+        
+    }
+
+    /*buttonMouseDown = (aEvent) => {
         this.#newGame.onMouseDown(aEvent);
         this.#checkAnswer.onMouseDown(aEvent);
         this.#buttonCheat.onMouseDown(aEvent);
-    }
+    }*/
 }

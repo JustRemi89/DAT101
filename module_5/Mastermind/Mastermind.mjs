@@ -53,10 +53,7 @@ function drawGame(){
   spcvs.clearCanvas();
   //Draw all game objects here, remember to think about the draw order (layers in PhotoShop for example!)
   GameProps.Board.draw();
-  for (let i = 0; i < GameProps.computerAnswer.length; i++) {
-    const sprite = GameProps.computerAnswer[i];
-    sprite.draw();
-  }
+  drawComputerAnswer();
   GameProps.roundIndicator.draw();
   GameProps.Menu.draw();
   drawColorPicker();
@@ -70,6 +67,13 @@ function generateComputerAnswer() {
     const sprite = new libSprite.TSprite(spcvs, SpriteInfoList.ColorPicker, pos);
     sprite.index = colorIndex;
     GameProps.computerAnswer.push(sprite);
+  }
+}
+
+function drawComputerAnswer() {
+  for (let i = 0; i < GameProps.computerAnswer.length; i++) {
+    const sprite = GameProps.computerAnswer[i];
+    sprite.draw();
   }
 }
 

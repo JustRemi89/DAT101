@@ -1,5 +1,4 @@
 "use strict";
-import lib2D from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { SpriteInfoList } from "./Mastermind.mjs";
 import MastermindBoard from "./MastermindBoard.mjs";
@@ -10,7 +9,6 @@ export class TMenu {
     #buttonCheat;
     #panelHint;
     constructor(spcvs) {
-
         this.#newGame = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonNewGame, MastermindBoard.ButtonNewGame);
         this.#checkAnswer = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonCheckAnswer, MastermindBoard.ButtonCheckAnswer);
         this.#buttonCheat = new libSprite.TSpriteButton(spcvs, SpriteInfoList.ButtonCheat, MastermindBoard.ButtonCheat);

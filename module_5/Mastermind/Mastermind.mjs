@@ -9,6 +9,7 @@ import { TColorPicker } from "./ColorPicker.mjs";
 import MastermindBoard from "./MastermindBoard.mjs";
 import { TMenu } from "./menu.mjs";
 
+
 //--------------------------------------------------------------------------------------------------------------------
 //------ Variables, Constants and Objects
 //--------------------------------------------------------------------------------------------------------------------
@@ -29,18 +30,19 @@ const spcvs = new libSprite.TSpriteCanvas(cvs);
 
 //Add all you game objects here
 export const GameProps = {
-  Board: null,
-  Menu: null,
-  ColorPickers: [],
-  SnapTo: {
+  board: null,
+  colorPickers:[],
+  snapTo:{
     positions: MastermindBoard.ColorAnswer.Row1,
-    distance: 20,
+    distance: 20
   },
-  ColorHint: null,
-  computerAnswer: [],
+  computerAnswers: [],
   roundIndicator: null,
+  menu: null,
   playerAnswers: [null, null, null, null],
+  answerHintRow: MastermindBoard.AnswerHint.Row1,
 }
+
 
 //--------------------------------------------------------------------------------------------------------------------
 //------ Functions
@@ -53,44 +55,43 @@ function newGame() {
 function drawGame(){
   spcvs.clearCanvas();
   //Draw all game objects here, remember to think about the draw order (layers in PhotoShop for example!)
-  GameProps.Board.draw();
-  drawComputerAnswer();
+  GameProps.board.draw();
+
+  for(let i = 0; i < GameProps.computerAnswers.length; i++){
+    const computerAnswer = GameProps.computerAnswers[i];
+    computerAnswer.draw();
+  }
+  
   GameProps.roundIndicator.draw();
-  GameProps.Menu.draw();
-  drawColorPicker();
+
+  GameProps.menu.draw();
+
+  for(let i = 0; i < GameProps.colorPickers.length; i++){
+    const colorPicker = GameProps.colorPickers[i];
+    colorPicker.draw();
+  }
+
   requestAnimationFrame(drawGame);
 }
 
-function generateComputerAnswer() {
-  for(let i = 0; i < 4; i++) {
+function generateComputerAnswer(){
+  //Først må vi genere 4 tilfeldige farger
+  //Deretter må vi plassere disse fargene i computerAnswers
+  //Vi må bruke libSprite.TSprite for å lage en sprite for hver farge
+  for(let i = 0; i < 4 ; i++){
     const colorIndex = Math.floor(Math.random() * SpriteInfoList.ColorPicker.count);
     const pos = MastermindBoard.ComputerAnswer[i];
-    const sprite = new libSprite.TSprite(spcvs, SpriteInfoList.ColorPicker, pos);
+    const sprite = new libSprite.TSprite(spcvs, SpriteInfoList.ColorPicker,pos);
     sprite.index = colorIndex;
-    GameProps.computerAnswer.push(sprite);
+    GameProps.computerAnswers.push(sprite);
   }
+
 }
 
-function drawComputerAnswer() {
-  for (let i = 0; i < GameProps.computerAnswer.length; i++) {
-    const sprite = GameProps.computerAnswer[i];
-    sprite.draw();
-  }
-}
-
-function drawColorPicker() {
-  for (let i = 0; i < GameProps.ColorPickers.length; i++) {
-    const ColorPicker = GameProps.ColorPickers[i];
-    ColorPicker.draw();
-  }
-}
-
-function moveRoundIndicator() {
-  const pos = GameProps.SnapTo.positions[0];
-  pos.x -= 84;
-  pos.y += 7;
-  GameProps.roundIndicator.x = pos.x;
-  GameProps.roundIndicator.y = pos.y;
+export function moveRoundIndicator(){
+  const pos = GameProps.snapTo.positions[0];
+  GameProps.roundIndicator.x = pos.x - 84;
+  GameProps.roundIndicator.y = pos.y + 7;
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -103,21 +104,23 @@ function loadGame() {
   cvs.width = SpriteInfoList.Board.width;
   cvs.height = SpriteInfoList.Board.height;
   spcvs.updateBoundsRect();
-
-  GameProps.Board = new libSprite.TSprite(spcvs, SpriteInfoList.Board, new lib2D.TPoint(0, 0));
-  GameProps.Menu = new TMenu(spcvs);
-
+  let pos = new lib2D.TPoint(0, 0);
+  GameProps.board = new libSprite.TSprite(spcvs, SpriteInfoList.Board, pos);
+ 
   const ColorKeys = Object.keys(MastermindBoard.ColorPicker);
-  for (let i = 0; i < ColorKeys.length; i++) {
-    const colorName = ColorKeys[i]; // Color name
+  console.log(ColorKeys);
+  for(let i = 0; i < ColorKeys.length; i++){
+    const colorName = ColorKeys[i]; //Color name
     const colorPicker = new TColorPicker(spcvs, SpriteInfoList.ColorPicker, colorName, i);
-    GameProps.ColorPickers.push(colorPicker);
+    GameProps.colorPickers.push(colorPicker);
   }
 
-  const pos = GameProps.SnapTo.positions[0];
+  pos = GameProps.snapTo.positions[0];
   GameProps.roundIndicator = new libSprite.TSprite(spcvs, SpriteInfoList.ColorHint, pos);
   GameProps.roundIndicator.index = 2;
   moveRoundIndicator();
+
+  GameProps.menu = new TMenu(spcvs);
 
   newGame();
   requestAnimationFrame(drawGame); // Start the animation loop
@@ -130,3 +133,4 @@ function loadGame() {
 
 
 spcvs.loadSpriteSheet("./Media/SpriteSheet.png", loadGame);
+window.addEventListener("resize", spcvs.updateBoundsRect.bind(spcvs));

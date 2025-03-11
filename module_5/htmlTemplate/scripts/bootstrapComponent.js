@@ -1,6 +1,6 @@
 "use strict";
 
-export class TBootstrapComponent extends HTMLElement {
+export default class TBootstrapComponent extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});

@@ -8,11 +8,10 @@ class THome extends TBootstrapComponent {
     }
 
     render() {
-        this.shadowDom.innerHTML = `
-            <div class="container">
-                <h1 class="text-center">Home</h1>
-                <p class="text-center">Welcome to the home page!</p>
-            </div>
-        `;
+        const template = document.getElementById('home-page-template');
+        const content = template.content.cloneNode(true);
+        this.shadowRoot.appendChild(content);
     }
 }
+
+customElements.define('home-page', THome);

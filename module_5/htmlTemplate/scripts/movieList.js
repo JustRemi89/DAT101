@@ -1,5 +1,5 @@
 "use strict"
-const myMovies =[
+const movieList =[
   {
     "title": "The Shawshank Redemption",
     "director": "Frank Darabont",
@@ -72,4 +72,4 @@ const myMovies =[
   }
 ]
 
-export default {movieList: myMovies};
+export default movieList;

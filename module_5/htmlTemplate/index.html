@@ -9,7 +9,21 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>  
 </head>
 <body>
-  <main-menu></main-menu>
+    <section id="header-content" class="header-content">
+        <main-menu></main-menu>
+    </section>
+    <section id="body-content" class="body-content">
+        <!-- Her kommer alt innholdet fra meny-styringen -->
+        <home-page></home-page>
+    </section>
+    <section id="footer-content" class="footer-content">
+        <footer class="footer mt-auto py-3 bg-body-tertiary">
+            <div class="container">
+            <span class="text-muted">&copy; Remi Johansen | DAT101 | 2025</span>
+            </div>
+        </footer>
+    </section>
+  
 
   <template id="main-menu-template">
     <nav class="navbar navbar-expand-sm bg-body-tertiary">

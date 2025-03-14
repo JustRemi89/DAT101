@@ -1,5 +1,5 @@
 "use strict"
-const myMovies =[
+export const myMovies =[
   {
     "title": "The Shawshank Redemption",
     "director": "Frank Darabont",

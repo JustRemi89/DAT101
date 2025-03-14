@@ -1,5 +1,5 @@
 "use strict"
-export const myMovies =[
+const myMovies =[
   {
     "title": "The Shawshank Redemption",
     "director": "Frank Darabont",
@@ -71,3 +71,5 @@ export const myMovies =[
     "rating": 8.7
   }
 ]
+
+export default myMovies;

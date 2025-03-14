@@ -72,4 +72,4 @@ const myMovies =[
   }
 ]
 
-export default myMovies;
+export default {movieList: myMovies};

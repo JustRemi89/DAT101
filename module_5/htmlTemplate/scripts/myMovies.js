@@ -24,6 +24,38 @@ export class TMyMovies extends TBootstrapComponent {
     }
 
     #loadMovies() {
+        for(let i = 0; i < this.#movies.length; i++) {
+            const movie = this.#movies[i];
+            const row = document.createElement('tr');
+
+            // Legger til tittel
+            let td = document.createElement('td');
+            td.textContent = movie.title;
+            row.appendChild(td);
+
+            // Legger til regissør
+            td = document.createElement('td');
+            td.textContent = movie.director;
+            row.appendChild(td);
+
+            // Legger til år
+            td = document.createElement('td');
+            td.textContent = movie.year;
+            row.appendChild(td);
+
+            // Legger til sjanger
+            td = document.createElement('td');
+            td.textContent = movie.genre.join(', ');
+            row.appendChild(td);
+
+            // Legger til rating
+            td = document.createElement('td');
+            td.textContent = movie.rating;
+            row.appendChild(td);
+
+            // Legger til raden i tabellen
+            this.#htmlTable.appendChild(row);
+        }
         //Oppdater antall filmer i totalMovies
         const totalMovies = this.shadowRoot.getElementById('totalMovies');
         totalMovies.textContent = this.#movies.length.toString();
@@ -34,7 +66,7 @@ export class TMyMovies extends TBootstrapComponent {
         const template = document.getElementById('my-movies-page-template');
         const content = template.content.cloneNode(true);
         this.shadowRoot.appendChild(content);
-        this.#htmlTable = this.shadowRoot.getElementById('movie-table');
+        this.#htmlTable = this.shadowRoot.getElementById('movie-table-body');
         this.#loadMovies();
     }
 }

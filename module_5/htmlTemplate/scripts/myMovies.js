@@ -36,6 +36,8 @@ export class TMyMovies extends TBootstrapComponent {
 
     #addMovie(aMovie) {
         const row = document.createElement('tr');
+        row.style.cursor = "pointer";
+        row.addEventListener("click", this.#editMovie);
 
         // Legger til tittel
         let td = document.createElement('td');
@@ -148,6 +150,19 @@ class TMovieForm extends TBootstrapComponent {
 
         if(editMovie){
             //Her må vi fylle ut feltene med informasjon fra editMovie
+            this.#titleElement.value = editMovie.title;
+            this.#directorElement.value = editMovie.director;
+            this.#yearElement.value = editMovie.year;
+            for(let i = 0; i < this.#genreElements.length; i++) {
+                const genreElement = this.#genreElements[i];
+                for(let j = 0; j < editMovie.genre.length; j++) {
+                    if(genreElement.value === editMovie.genre[j]) {
+                        genreElement.checked = true;
+                    }
+                }
+            }
+            this.#ratingElement.value = editMovie.rating;
+
             editMovie = null;
         }
     }

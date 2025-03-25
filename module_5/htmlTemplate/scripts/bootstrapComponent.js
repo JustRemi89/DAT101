@@ -23,8 +23,11 @@ export default class TBootstrapComponent extends HTMLElement {
     injectFontAwesome() {
         const linkElement = document.createElement('link');
         linkElement.setAttribute('rel', 'stylesheet');
-        linkElement.setAttribute('href', './fa/css/all.min.css');
+        linkElement.setAttribute('href', 'http://127.0.0.1:5500/module_5/htmlTemplate/fa/css/fontawesome.min.css');
+        //linkElement.setAttribute('href', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
         this.shadowRoot.appendChild(linkElement);
+
+        //<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"></link>
     }
 
     render() {

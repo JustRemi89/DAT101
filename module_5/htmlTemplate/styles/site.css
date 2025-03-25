@@ -14,7 +14,9 @@ body{
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
-  background: conic-gradient(from 90deg at 50% 125%, #20b2aa, #135da5, #0d0895, #4b0082, #4b0082, #0d0895, #135da5, #20b2aa);
+  /* background: conic-gradient(from 90deg at 50% 125%, #20b2aa, #135da5, #0d0895, #4b0082, #4b0082, #0d0895, #135da5, #20b2aa); */
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,115,9,1) 35%, rgba(0,212,255,1) 100%); 
 }
 
 section {
@@ -28,7 +30,7 @@ section {
   align-items: center;
   height: 40px;
   width: 100%;
-  background-color: rgb(180, 220, 255);
+  background-color: rgba(255, 255, 255, .6);
   position: sticky;
   top: 0;
 }
@@ -39,14 +41,14 @@ section {
   flex: 1;
   margin: 0 auto;
   width: 100%;
-  margin-bottom: 20%;
+  /* margin-bottom: 20%; */
 }
 
 .footer-content{
   display: flex;
   height: 30px;
   width: 100%;
-  background-color: rgb(180, 220, 255);
+  background-color: rgba(255, 255, 255, .6);
   position: fixed;
   bottom: 0;
 }

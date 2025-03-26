@@ -80,6 +80,7 @@ function drawGame() {
 
 function updateGame() {
   // Update game properties here:
+  GameProps.ball.update();
 }
 
 //--------------------------------------------------------------------------------------------------------------------

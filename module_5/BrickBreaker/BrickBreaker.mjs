@@ -36,7 +36,14 @@ const cvs = document.getElementById("cvs");
 const spcvs = new libSprite.TSpriteCanvas(cvs);
 let hndUpdateGame = null;
 
+export const EGameStatus = {
+  Running: 0,
+  Idle: 1,
+  GameOver: 2,
+}
+
 export const GameProps = {
+  status: EGameStatus.Idle,
   bounds : new lib2D.TRectangle({x: 26, y: 110}, SpriteInfoList.Background.width - 52, SpriteInfoList.Background.height - 195),
   background: new libSprite.TSprite(spcvs, SpriteInfoList.Background),
   hero: null,
@@ -86,8 +93,18 @@ function drawGame() {
 
 function updateGame() {
   // Update game properties here:
-  GameProps.ball.update();
-  checkBallBrickCollision();
+  switch (GameProps.status) {
+    case EGameStatus.Running:
+      GameProps.hero.update();
+      GameProps.ball.update();
+      // Check for collisions
+      checkBallBrickCollision();
+      break;
+    case EGameStatus.GameOver:
+      break;
+    case EGameStatus.Idle:
+      break;
+  }
 }
 
 function generateBricks() {
@@ -98,11 +115,19 @@ function generateBricks() {
   const rows = 4; // Number of rows of bricks
   const cols = 6; // Number of columns of bricks
 
+  const colors = [
+    SpriteInfoList.BrickYellow,
+    SpriteInfoList.BrickRed,
+    SpriteInfoList.BrickPurple,
+    SpriteInfoList.BrickBlue,
+  ];
+
   const pos = new lib2D.TPoint(startX, startY);
 
   for(let row = 0; row < rows; row++) {
+    const color = colors[row % colors.length]; // Cycle through colors based on row
     for(let col = 0; col < cols; col++) {
-      const brick = new TBrick(spcvs, SpriteInfoList.BrickPurple, pos);
+      const brick = new TBrick(spcvs, color, pos);
       GameProps.bricks.push(brick);
       pos.x += brick.width + brickSpacing; // Move to the right for the next brick
     }

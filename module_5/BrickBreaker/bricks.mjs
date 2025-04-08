@@ -11,12 +11,14 @@ export class TBrick extends libSprite.TSprite {
     #isCrushed;
     #isVisible;
     #isHit;
+    #life;
     constructor(aSpriteCanvas, aSpriteInfo, aPosition) {
         super(aSpriteCanvas, aSpriteInfo, aPosition);
         this.#isCrushed = false;
         this.#isVisible = true;
         this.#isHit = false;
         this.#isCrushed = false;
+        this.#life = 0;
     }
     draw() {
         if (this.#isCrushed) {

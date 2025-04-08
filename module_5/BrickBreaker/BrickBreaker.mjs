@@ -8,6 +8,7 @@ import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { THero } from "./hero.mjs";
 import { TBall } from "./ball.mjs";
 import { TBrick } from "./bricks.mjs";
+import { TMenu } from "./menu.mjs";
 
 //--------------------------------------------------------------------------------------------------------------------
 //------ Variables, Constants and Objects
@@ -37,15 +38,17 @@ const spcvs = new libSprite.TSpriteCanvas(cvs);
 let hndUpdateGame = null;
 
 export const EGameStatus = {
-  Running: 0,
-  Idle: 1,
-  GameOver: 2,
+  NewGame: 0,
+  Running: 1,
+  Idle: 2,
+  GameOver: 3,
 }
 
 export const GameProps = {
-  status: EGameStatus.Idle,
-  bounds : new lib2D.TRectangle({x: 26, y: 110}, SpriteInfoList.Background.width - 52, SpriteInfoList.Background.height - 195),
+  status: EGameStatus.NewGame,
+  bounds: new lib2D.TRectangle({x: 26, y: 110}, SpriteInfoList.Background.width - 52, SpriteInfoList.Background.height - 195),
   background: new libSprite.TSprite(spcvs, SpriteInfoList.Background),
+  menu: null,
   hero: null,
   ball: null,
   bricks: [],
@@ -58,6 +61,7 @@ export const GameProps = {
 
 function newGame() {
   // Create dynamic game properties here:
+  GameProps.menu = new TMenu(spcvs);
   GameProps.hero = new THero(spcvs);
   generateBricks();
   GameProps.ball = new TBall(spcvs);
@@ -82,12 +86,25 @@ function drawBounds() {
 function drawGame() {
   spcvs.clearCanvas();
   GameProps.background.draw(0, 0);
-  GameProps.hero.draw();
-  for(let i = 0; i < GameProps.bricks.length; i++) {
-    GameProps.bricks[i].draw();
+  switch(GameProps.status) {
+    case EGameStatus.NewGame:
+      GameProps.menu.draw(); // Draw menu
+      break;
+    case EGameStatus.Idle:
+      GameProps.menu.draw(); // Draw menu
+      break;
+    case EGameStatus.Running:
+      GameProps.hero.draw(); // Draw hero
+      // Draw bricks
+      for(let i = 0; i < GameProps.bricks.length; i++) {
+        GameProps.bricks[i].draw();
+      }
+      GameProps.ball.draw(); // Draw ball
+      drawBounds(); // Draw bounds
+      break;
+    case EGameStatus.GameOver:
+      break;
   }
-  GameProps.ball.draw();
-  drawBounds();
   requestAnimationFrame(drawGame);
 }
 
@@ -95,10 +112,9 @@ function updateGame() {
   // Update game properties here:
   switch (GameProps.status) {
     case EGameStatus.Running:
-      GameProps.hero.update();
-      GameProps.ball.update();
-      // Check for collisions
-      checkBallBrickCollision();
+      GameProps.hero.update(); // Update paddle position
+      GameProps.ball.update(); // Update ball position
+      checkBallBrickCollision(); // Check for collisions
       break;
     case EGameStatus.GameOver:
       break;

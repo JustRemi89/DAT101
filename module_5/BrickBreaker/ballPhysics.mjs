@@ -67,6 +67,11 @@ class TBallPhysics {
     return false;
   }
 
+  reverseY() {
+    this.#directionVector.y *= -1;
+    this.#speedVector.calculateMovement(this.#directionVector, this.#speed);
+  }
+
 
   update(aBounds, aHero, aBricks) {
     this.#sprite.x += this.#speedVector.x;

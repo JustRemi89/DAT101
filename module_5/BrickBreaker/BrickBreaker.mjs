@@ -7,6 +7,7 @@ import lib2D from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { THero } from "./hero.mjs";
 import { TBall } from "./ball.mjs";
+import { TBrick } from "./bricks.mjs";
 
 //--------------------------------------------------------------------------------------------------------------------
 //------ Variables, Constants and Objects
@@ -40,6 +41,7 @@ export const GameProps = {
   background: new libSprite.TSprite(spcvs, SpriteInfoList.Background),
   hero: null,
   ball: null,
+  bricks: [],
 }
   
 
@@ -50,6 +52,7 @@ export const GameProps = {
 function newGame() {
   // Create dynamic game properties here:
   GameProps.hero = new THero(spcvs);
+  generateBricks();
   GameProps.ball = new TBall(spcvs);
   
   if(hndUpdateGame !== null) {
@@ -73,6 +76,9 @@ function drawGame() {
   spcvs.clearCanvas();
   GameProps.background.draw(0, 0);
   GameProps.hero.draw();
+  for(let i = 0; i < GameProps.bricks.length; i++) {
+    GameProps.bricks[i].draw();
+  }
   GameProps.ball.draw();
   drawBounds();
   requestAnimationFrame(drawGame);
@@ -81,6 +87,52 @@ function drawGame() {
 function updateGame() {
   // Update game properties here:
   GameProps.ball.update();
+  checkBallBrickCollision();
+}
+
+function generateBricks() {
+  const startX = 150; // Starting x position for the first brick
+  const startY = 150; // Starting y position for the first brick
+  const brickSpacing = 5; // Spacing between bricks
+
+  const rows = 4; // Number of rows of bricks
+  const cols = 6; // Number of columns of bricks
+
+  const pos = new lib2D.TPoint(startX, startY);
+
+  for(let row = 0; row < rows; row++) {
+    for(let col = 0; col < cols; col++) {
+      const brick = new TBrick(spcvs, SpriteInfoList.BrickPurple, pos);
+      GameProps.bricks.push(brick);
+      pos.x += brick.width + brickSpacing; // Move to the right for the next brick
+    }
+    pos.x = startX; // Reset x position for the next row
+    pos.y += GameProps.bricks[0].height + brickSpacing; // Move down for the next row
+  }
+}
+
+function checkBallBrickCollision() {
+  for (let i = 0; i < GameProps.bricks.length; i++) {
+    const brick = GameProps.bricks[i];
+
+    // Sjekk om mursteinen er synlig og ikke knust
+    if (!brick.isVisible || brick.isCrushed) {
+      continue;
+    }
+
+    // Sjekk kollisjon
+    if (
+      GameProps.ball.x < brick.x + brick.width &&
+      GameProps.ball.x + GameProps.ball.width > brick.x &&
+      GameProps.ball.y < brick.y + brick.height &&
+      GameProps.ball.y + GameProps.ball.height > brick.y
+    ) {
+      // Kollisjon oppdaget
+      brick.crush(); // Knus mursteinen
+      GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
+      break; // Avslutt løkken etter første treff
+    }
+  }
 }
 
 //--------------------------------------------------------------------------------------------------------------------

@@ -12,7 +12,17 @@ export class TBall extends libSprite.TSprite {
         this.#physics = new TBallPhysics(this, new lib2d.TPoint(1, -1), 2.1);
     }
 
+    reverseY() {
+        this.#physics.reverseY();
+      }
+
     update() {
         this.#physics.update(GameProps.bounds, GameProps.hero);
     }
+
+    if (collisionDetected) {
+        GameProps.ball.reverseY();
+      }
+
+    
 }

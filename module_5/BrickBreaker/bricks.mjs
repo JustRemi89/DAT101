@@ -1,22 +1,14 @@
 "use strict";
-//--------------------------------------------------------------------------------------------------------------------
-//------ Imports
-//--------------------------------------------------------------------------------------------------------------------
-import lib2D from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 
 export class TBrick extends libSprite.TSprite {
-    #spcvs;
-    #spi;
     #isCrushed;
     #isVisible;
-    #isHit;
     #life;
     constructor(aSpriteCanvas, aSpriteInfo, aPosition, life) {
         super(aSpriteCanvas, aSpriteInfo, aPosition);
         this.#isCrushed = false;
         this.#isVisible = true;
-        this.#isHit = false;
         this.#isCrushed = false;
         this.#life = life;
     }
@@ -26,6 +18,7 @@ export class TBrick extends libSprite.TSprite {
         }
         super.draw();
     }
+
     crush() {
         this.#life--; // Reduser liv
         if (this.#life <= 0) {

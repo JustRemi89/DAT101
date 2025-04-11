@@ -37,6 +37,8 @@ const cvs = document.getElementById("cvs");
 const spcvs = new libSprite.TSpriteCanvas(cvs);
 let hndUpdateGame = null;
 
+let crushedBricks = 0;
+
 export const EGameStatus = {
   NewGame: 0,
   Running: 1,
@@ -59,8 +61,9 @@ export const GameProps = {
 //------ Functions
 //--------------------------------------------------------------------------------------------------------------------
 
-function newGame() {
+export function newGame() {
   // Create dynamic game properties here:
+  GameProps.bricks = [];
   GameProps.menu = new TMenu(spcvs);
   GameProps.hero = new THero(spcvs);
   generateBricks();
@@ -94,11 +97,9 @@ function drawGame() {
       GameProps.menu.draw(); // Draw menu
       break;
     case EGameStatus.Running:
+      GameProps.menu.draw();
       GameProps.hero.draw(); // Draw hero
-      // Draw bricks
-      for(let i = 0; i < GameProps.bricks.length; i++) {
-        GameProps.bricks[i].draw();
-      }
+      drawBricks(); // Draw bricks
       GameProps.ball.draw(); // Draw ball
       drawBounds(); // Draw bounds
       break;
@@ -109,16 +110,18 @@ function drawGame() {
 }
 
 function updateGame() {
+  console.log(GameProps.status);
   // Update game properties here:
   switch (GameProps.status) {
+    case EGameStatus.NewGame:
+      break;
+    case EGameStatus.Idle:
+      break;
     case EGameStatus.Running:
-      GameProps.hero.update(); // Update paddle position
       GameProps.ball.update(); // Update ball position
       checkBallBrickCollision(); // Check for collisions
       break;
     case EGameStatus.GameOver:
-      break;
-    case EGameStatus.Idle:
       break;
   }
 }
@@ -142,13 +145,29 @@ function generateBricks() {
 
   for(let row = 0; row < rows; row++) {
     const color = colors[row % colors.length]; // Cycle through colors based on row
+
+    let life;
+    if (row === 0) {
+      life = 1; // Første rad har 1 liv
+    } else if (row === 1 || row === 2) {
+      life = 2; // Rad 2 og 3 har 2 liv
+    } else {
+      life = 3; // Siste rad har 3 liv
+    }
+
     for(let col = 0; col < cols; col++) {
-      const brick = new TBrick(spcvs, color, pos);
+      const brick = new TBrick(spcvs, color, pos, life);
       GameProps.bricks.push(brick);
       pos.x += brick.width + brickSpacing; // Move to the right for the next brick
     }
     pos.x = startX; // Reset x position for the next row
     pos.y += GameProps.bricks[0].height + brickSpacing; // Move down for the next row
+  }
+}
+
+function drawBricks() {
+  for(let i = 0; i < GameProps.bricks.length; i++) {
+    GameProps.bricks[i].draw();
   }
 }
 
@@ -169,9 +188,18 @@ function checkBallBrickCollision() {
       GameProps.ball.y + GameProps.ball.height > brick.y
     ) {
       // Kollisjon oppdaget
-      brick.crush(); // Knus mursteinen
-      GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
-      break; // Avslutt løkken etter første treff
+      // Sjekk om brick har ett liv igjen
+      if (brick.life === 1) {
+        brick.crush(); // Knus mursteinen
+        crushedBricks++; // Øk antall knuste mursteiner
+        console.log("Crushed bricks: " + crushedBricks);
+        GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
+        break; // Avslutt løkken etter første treff
+      } else {
+        brick.crush(); // Knus mursteinen
+        GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
+        break; // Avslutt løkken etter første treff
+      }
     }
   }
 }

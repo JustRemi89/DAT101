@@ -12,13 +12,13 @@ export class TBrick extends libSprite.TSprite {
     #isVisible;
     #isHit;
     #life;
-    constructor(aSpriteCanvas, aSpriteInfo, aPosition) {
+    constructor(aSpriteCanvas, aSpriteInfo, aPosition, life) {
         super(aSpriteCanvas, aSpriteInfo, aPosition);
         this.#isCrushed = false;
         this.#isVisible = true;
         this.#isHit = false;
         this.#isCrushed = false;
-        this.#life = 0;
+        this.#life = life;
     }
     draw() {
         if (this.#isCrushed) {
@@ -27,7 +27,14 @@ export class TBrick extends libSprite.TSprite {
         super.draw();
     }
     crush() {
-        this.#isCrushed = true;
+        this.#life--; // Reduser liv
+        if (this.#life <= 0) {
+            this.#isCrushed = true; // Marker som knust
+        } else if (this.#life === 1) {
+            this.index = 2; // Sett index til 2 hvis det kun er ett liv igjen
+        } else {
+            this.index++; // Øk index for å vise skade
+        }
     }
     get isVisible() {
         return this.#isVisible;
@@ -35,5 +42,9 @@ export class TBrick extends libSprite.TSprite {
     
     get isCrushed() {
         return this.#isCrushed;
+    }
+
+    get life() {
+        return this.#life;
     }
 }

@@ -14,7 +14,11 @@ export class TBall extends libSprite.TSprite {
 
     reverseY() {
         this.#physics.reverseY();
-      }
+    }
+
+    reverseX() {
+        this.#physics.reverseX();
+    }
 
     update() {
         this.#physics.update(GameProps.bounds, GameProps.hero);

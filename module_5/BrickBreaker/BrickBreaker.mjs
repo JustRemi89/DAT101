@@ -101,7 +101,7 @@ function drawGame() {
       GameProps.hero.draw(); // Draw hero
       drawBricks(); // Draw bricks
       GameProps.ball.draw(); // Draw ball
-      drawBounds(); // Draw bounds
+      //drawBounds(); // Draw bounds
       break;
     case EGameStatus.GameOver:
       break;
@@ -110,7 +110,6 @@ function drawGame() {
 }
 
 function updateGame() {
-  console.log(GameProps.status);
   // Update game properties here:
   switch (GameProps.status) {
     case EGameStatus.NewGame:
@@ -174,6 +173,7 @@ function drawBricks() {
 function checkBallBrickCollision() {
   for (let i = 0; i < GameProps.bricks.length; i++) {
     const brick = GameProps.bricks[i];
+    const ball = GameProps.ball;
 
     // Sjekk om mursteinen er synlig og ikke knust
     if (!brick.isVisible || brick.isCrushed) {
@@ -181,20 +181,43 @@ function checkBallBrickCollision() {
     }
 
     // Sjekk kollisjon
-    if (
-      GameProps.ball.x < brick.x + brick.width &&
-      GameProps.ball.x + GameProps.ball.width > brick.x &&
-      GameProps.ball.y < brick.y + brick.height &&
-      GameProps.ball.y + GameProps.ball.height > brick.y
-    ) {
+      if (
+        ball.right > brick.left &&
+        ball.left < brick.right &&
+        ball.bottom > brick.top &&
+        ball.top < brick.bottom
+      ) {
       // Kollisjon oppdaget
       brick.crush(); // Reduser liv eller knus mursteinen
       if (brick.isCrushed) {
           crushedBricks++; // Øk antall knuste mursteiner
           GameProps.menu.updateCrushedNumber(crushedBricks); // Oppdater tallet
-          console.log("Crushed bricks: " + crushedBricks);
       }
-      GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
+
+      // Sjekk hvilken side ballen traff
+      const overlapTop = ball.bottom - brick.top; // Overlapping på toppen
+      const overlapBottom = brick.bottom - ball.top; // Overlapping på bunnen
+      const overlapLeft = ball.right - brick.left; // Overlapping på venstre side
+      const overlapRight = brick.right - ball.left; // Overlapping på høyre side
+
+      // Finn den minste overlappingen for å avgjøre treffpunkt
+      const minOverlap = Math.min(overlapTop, overlapBottom, overlapLeft, overlapRight);
+
+      // Sjekk om ballen treffer toppen eller bunnen av mursteinen
+      if (minOverlap === overlapTop) {
+        // Ballen traff toppen av mursteinen
+        ball.reverseY();
+      } else if (minOverlap === overlapBottom) {
+        // Ballen traff bunnen av mursteinen
+        ball.reverseY();
+      } else if (minOverlap === overlapLeft) {
+        // Ballen traff venstre side av mursteinen
+        ball.reverseX();
+      } else if (minOverlap === overlapRight) {
+        // Ballen traff høyre side av mursteinen
+        ball.reverseX();
+      }
+
       break; // Avslutt løkken etter første treff
     }
   }

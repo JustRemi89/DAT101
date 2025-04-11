@@ -1,7 +1,7 @@
 "use strict";
 import lib2d from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
-import { SpriteInfoList } from "./BrickBreaker.mjs";
+import { SpriteInfoList, GameProps } from "./BrickBreaker.mjs";
 
 export class THero {
     #sprites;
@@ -21,6 +21,14 @@ export class THero {
     #onMouseMove = (aEvent) => {
         const pos = this.#spcvs.mousePos;
         this.#sprites[this.#paddleIndex].x = pos.x;
+        const bounds = GameProps.bounds;
+        // Test om helten (paddle) er innenfor spillområdet
+        const currentSprite = this.#sprites[this.#paddleIndex];
+        if (currentSprite.x < bounds.left) {
+            currentSprite.x = bounds.left;
+        } else if (currentSprite.x + currentSprite.width > bounds.right) {
+            currentSprite.x = bounds.right - currentSprite.width;
+        }
     }
 
     draw() {

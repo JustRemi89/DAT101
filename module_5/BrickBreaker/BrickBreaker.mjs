@@ -188,21 +188,18 @@ function checkBallBrickCollision() {
       GameProps.ball.y + GameProps.ball.height > brick.y
     ) {
       // Kollisjon oppdaget
-      // Sjekk om brick har ett liv igjen
-      if (brick.life === 1) {
-        brick.crush(); // Knus mursteinen
-        crushedBricks++; // Øk antall knuste mursteiner
-        console.log("Crushed bricks: " + crushedBricks);
-        GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
-        break; // Avslutt løkken etter første treff
-      } else {
-        brick.crush(); // Knus mursteinen
-        GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
-        break; // Avslutt løkken etter første treff
+      brick.crush(); // Reduser liv eller knus mursteinen
+      if (brick.isCrushed) {
+          crushedBricks++; // Øk antall knuste mursteiner
+          GameProps.menu.updateCrushedNumber(crushedBricks); // Oppdater tallet
+          console.log("Crushed bricks: " + crushedBricks);
       }
+      GameProps.ball.reverseY(); // Endre ballens retning (vertikalt)
+      break; // Avslutt løkken etter første treff
     }
   }
 }
+
 
 //--------------------------------------------------------------------------------------------------------------------
 //------ Event Handlers

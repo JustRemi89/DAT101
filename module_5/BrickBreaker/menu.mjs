@@ -55,7 +55,7 @@ export class TMenu {
         pos.y = 30;
         this.#spCrushedIcon = new libSprite.TSprite(aSpriteCanvas, SpriteInfoList.NoOfCrushedBricks, pos);
         pos.x = 300;
-        this.#spCrushedNumber = new libSprite.TSprite(aSpriteCanvas, SpriteInfoList.NumberSmall, pos);
+        this.#spCrushedNumber = new TCrushedNumber(aSpriteCanvas, pos);
 
         this.#activeSprite = null; // Vi har ingen aktive sprites som standard
 
@@ -142,4 +142,25 @@ export class TMenu {
             GameProps.status = EGameStatus.Idle;
         }
     };
+
+    updateCrushedNumber(aValue) {
+        if (this.#spCrushedNumber) {
+            this.#spCrushedNumber.value = aValue;
+        }
+    }
+}
+
+export class TCrushedNumber extends libSprite.TSpriteNumber {
+    #spcvs;
+    #spCrushedNumber;
+    constructor(aSpriteCanvas, aPosition) {
+        super(aSpriteCanvas, SpriteInfoList.NumberSmall, aPosition);
+        this.#spcvs = aSpriteCanvas;
+        this.#spCrushedNumber = new libSprite.TSprite(aSpriteCanvas, SpriteInfoList.NumberSmall, aPosition);
+    }
+
+    draw() {
+        //this.#spCrushedNumber.draw();
+        super.draw();
+    }
 }
